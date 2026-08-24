@@ -1,0 +1,80 @@
+.jc-auth-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 1rem;
+}
+
+.jc-auth-card {
+  display: grid;
+  width: min(100%, 460px);
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 5vw, 2rem);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.jc-auth-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jc-auth-card__brand img {
+  width: 52px;
+  color: var(--color-accent);
+}
+
+.jc-auth-card__brand strong {
+  font-size: 1.35rem;
+}
+
+.jc-auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+}
+
+.jc-auth-tabs a {
+  padding: 0.7rem;
+  border-radius: calc(var(--radius-sm) - 3px);
+  color: var(--color-text-muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+.jc-auth-tabs a[aria-current="page"] {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.jc-foundation-note {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+.jc-dashboard-placeholder {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.jc-dashboard-placeholder h1 {
+  max-width: 900px;
+}
+
+.jc-dashboard-placeholder__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+

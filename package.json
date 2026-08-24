@@ -1,0 +1,16 @@
+{
+  "name": "jobconnect",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Panel administrativo frontend para reclutadores",
+  "scripts": {
+    "start": "node scripts/dev-server.mjs",
+    "dev": "node scripts/dev-server.mjs",
+    "check": "node scripts/check-files.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+

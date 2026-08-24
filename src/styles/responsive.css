@@ -1,0 +1,129 @@
+@media (max-width: 1024px) {
+  .jc-sidebar {
+    width: var(--sidebar-collapsed);
+  }
+
+  .jc-sidebar .jc-sidebar__brand span,
+  .jc-sidebar .jc-sidebar__link span:last-child,
+  .jc-sidebar .jc-sidebar__logout,
+  .jc-sidebar .jc-social-links {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .jc-workspace,
+  .jc-sidebar.is-collapsed ~ .jc-sidebar-overlay + .jc-workspace {
+    margin-left: var(--sidebar-collapsed);
+  }
+
+  .jc-dashboard-placeholder__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .jc-sidebar,
+  .jc-sidebar.is-collapsed {
+    width: min(var(--sidebar-expanded), calc(100vw - 2.5rem));
+    transform: translateX(-105%);
+  }
+
+  .jc-sidebar .jc-sidebar__brand span,
+  .jc-sidebar .jc-sidebar__link span:last-child,
+  .jc-sidebar .jc-sidebar__logout,
+  .jc-sidebar .jc-social-links {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .jc-app-shell.is-navigation-open .jc-sidebar {
+    transform: translateX(0);
+  }
+
+  .jc-sidebar-overlay {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    display: block;
+    visibility: hidden;
+    background: color-mix(in srgb, var(--color-bg) 76%, transparent);
+    opacity: 0;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .jc-app-shell.is-navigation-open .jc-sidebar-overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .jc-workspace,
+  .jc-sidebar.is-collapsed ~ .jc-sidebar-overlay + .jc-workspace {
+    margin-left: 0;
+  }
+
+  .jc-menu-button {
+    display: inline-flex;
+  }
+
+  .jc-topbar {
+    flex-wrap: wrap;
+  }
+
+  .jc-search,
+  .jc-search.is-expanded {
+    width: 100%;
+    order: 3;
+  }
+
+  .jc-table-wrapper {
+    display: none;
+  }
+
+  .jc-record-grid {
+    display: grid;
+  }
+
+  .jc-form-grid,
+  .jc-dashboard-placeholder__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jc-field--wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .jc-section-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .jc-section-header .jc-btn--primary {
+    width: 100%;
+  }
+
+  .jc-modal__actions {
+    flex-direction: column-reverse;
+  }
+
+  .jc-modal__actions .jc-btn {
+    width: 100%;
+  }
+
+  .jc-record-card__actions {
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
