@@ -1,22 +1,48 @@
-# Reflexión sobre NotebookLM
+# Reflexión sobre el uso de NotebookLM
 
-> Estructura provisional. Cada integrante debe registrar experiencias reales, no respuestas inventadas.
+> Documento reflexivo del equipo (Jared, Berny y Jeremy) sobre el uso de
+> NotebookLM durante el desarrollo de JobConnect. Cada integrante completa
+> su experiencia real; no se inventan reflexiones ajenas.
 
 ## Día 1
 
-- Experiencia: Pendiente.
-- Aprendizaje: Pendiente.
-- Decisión: Pendiente.
+**Fecha:** Pendiente
+
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
+
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
+
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
 
 ## Día 2
 
-- Experiencia: Pendiente.
-- Aprendizaje: Pendiente.
-- Decisión: Pendiente.
+**Fecha:** Pendiente
+
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
+
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
+
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
 
 ## Día 3
 
-- Experiencia: Pendiente.
-- Aprendizaje: Pendiente.
-- Decisión: Pendiente.
+**Fecha:** Pendiente
 
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
+
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
+
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
+
+## Conclusión general
+
+Pendiente de completar por el equipo al finalizar el proyecto.
