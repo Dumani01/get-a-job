@@ -17,6 +17,13 @@ function assertMethod(config, operation) {
 }
 
 export function createCrudModule({ config, mapper }) {
+  function mergeWithExisting(recordId, response) {
+    const existingRecord = getModuleRecords(config.key).find(
+      (record) => String(record.id) === String(recordId),
+    );
+    return mapper.fromApi({ ...existingRecord, ...response });
+  }
+
   async function list() {
     try {
       const response = await apiClient.request(config.endpoint);
@@ -47,7 +54,7 @@ export function createCrudModule({ config, mapper }) {
         method: assertMethod(config, "replace"),
         body: mapper.toReplacePayload(formData),
       });
-      const record = mapper.fromApi(response);
+      const record = mergeWithExisting(recordId, response);
       updateModuleRecord(config.key, recordId, record);
       return record;
     } catch (error) {
@@ -61,7 +68,7 @@ export function createCrudModule({ config, mapper }) {
         method: assertMethod(config, "update"),
         body: mapper.toUpdatePayload(formData),
       });
-      const record = mapper.fromApi(response);
+      const record = mergeWithExisting(recordId, response);
       updateModuleRecord(config.key, recordId, record);
       return record;
     } catch (error) {
@@ -97,4 +104,3 @@ export function createCrudModule({ config, mapper }) {
 }
 
 export default createCrudModule;
-

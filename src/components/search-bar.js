@@ -38,8 +38,13 @@ export function createSearchBar({ onSearch = () => {} } = {}) {
     input.value = value;
   }
 
-  return Object.freeze({ element: form, input, setExpanded, setValue });
+  function setDisabled(disabled) {
+    input.disabled = disabled;
+    clearButton.disabled = disabled;
+    form.hidden = disabled;
+  }
+
+  return Object.freeze({ element: form, input, setExpanded, setValue, setDisabled });
 }
 
 export default createSearchBar;
-

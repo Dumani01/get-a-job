@@ -1,19 +1,54 @@
 .jc-auth-page {
+  position: relative;
   display: grid;
   min-height: 100vh;
   place-items: center;
-  padding: 1rem;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  overflow: hidden;
+}
+
+.jc-auth-page::before,
+.jc-auth-page::after {
+  position: fixed;
+  z-index: -1;
+  width: min(42vw, 480px);
+  height: min(42vw, 480px);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  content: "";
+  opacity: 0.5;
+}
+
+.jc-auth-page::before {
+  top: -18vw;
+  right: -10vw;
+}
+
+.jc-auth-page::after {
+  bottom: -22vw;
+  left: -12vw;
 }
 
 .jc-auth-card {
+  position: relative;
   display: grid;
   width: min(100%, 460px);
-  gap: 1.25rem;
+  gap: 1.1rem;
   padding: clamp(1.25rem, 5vw, 2rem);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-md);
+}
+
+.jc-auth-card::after {
+  position: absolute;
+  z-index: -1;
+  inset: 12px -10px -12px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  content: "";
 }
 
 .jc-auth-card__brand {
@@ -24,11 +59,18 @@
 
 .jc-auth-card__brand img {
   width: 52px;
-  color: var(--color-accent);
 }
 
 .jc-auth-card__brand strong {
   font-size: 1.35rem;
+}
+
+.jc-auth-card h1 {
+  font-size: clamp(1.8rem, 6vw, 2.75rem);
+}
+
+.jc-auth-card__description {
+  color: var(--color-text-muted);
 }
 
 .jc-auth-tabs {
@@ -54,27 +96,21 @@
   color: var(--color-accent-contrast);
 }
 
-.jc-foundation-note {
+.jc-auth-form,
+.jc-auth-form__fields {
   display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
-  border: 1px dashed var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  gap: 0.9rem;
+}
+
+.jc-auth-security {
   color: var(--color-text-muted);
+  font-size: 0.875rem;
 }
 
-.jc-dashboard-placeholder {
-  display: grid;
-  gap: 1.5rem;
+.jc-auth-form__error:empty {
+  display: none;
 }
 
-.jc-dashboard-placeholder h1 {
-  max-width: 900px;
+.jc-auth-form__submit {
+  width: 100%;
 }
-
-.jc-dashboard-placeholder__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
