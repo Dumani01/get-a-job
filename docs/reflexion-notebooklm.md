@@ -1,47 +1,48 @@
-# Reflexión sobre NotebookLM
+# Reflexión sobre el uso de NotebookLM
 
-Esta reflexión debe completarse con experiencias reales del equipo.
-
-No se deben inventar experiencias, respuestas, aprendizajes ni decisiones.
+> Documento reflexivo del equipo (Jared, Berny y Jeremy) sobre el uso de
+> NotebookLM durante el desarrollo de JobConnect. Cada integrante completa
+> su experiencia real; no se inventan reflexiones ajenas.
 
 ## Día 1
 
-### Experiencia
+**Fecha:** Pendiente
 
-Pendiente.
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
 
-### Aprendizaje
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
 
-Pendiente.
-
-### Decisión
-
-Pendiente.
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
 
 ## Día 2
 
-### Experiencia
+**Fecha:** Pendiente
 
-Pendiente.
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
 
-### Aprendizaje
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
 
-Pendiente.
-
-### Decisión
-
-Pendiente.
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
 
 ## Día 3
 
-### Experiencia
+**Fecha:** Pendiente
 
-Pendiente.
+**¿Qué se consultó en NotebookLM?**
+Pendiente de completar por el equipo.
 
-### Aprendizaje
+**¿Qué tan útil fue la respuesta?**
+Pendiente de completar por el equipo.
 
-Pendiente.
+**¿Qué se haría diferente?**
+Pendiente de completar por el equipo.
 
-### Decisión
+## Conclusión general
 
-Pendiente.
+Pendiente de completar por el equipo al finalizar el proyecto.
