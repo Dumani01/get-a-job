@@ -16,6 +16,16 @@ function toPublicUser(user) {
   return { id, username, email, firstName, lastName, image };
 }
 
+function assertAuthenticationResponse(response) {
+  const accessToken = response?.accessToken ?? response?.token;
+
+  if (!accessToken) {
+    throw new Error("El servicio de autenticación no devolvió un token válido.");
+  }
+
+  return accessToken;
+}
+
 export async function login({ username, password }) {
   try {
     const response = await apiClient.request("/auth/login", {
@@ -23,7 +33,7 @@ export async function login({ username, password }) {
       body: { username, password, expiresInMins: 30 },
     });
 
-    setAccessToken(response.accessToken ?? response.token);
+    setAccessToken(assertAuthenticationResponse(response));
     setRefreshToken(response.refreshToken ?? null);
     setAuthUser(toPublicUser(response));
     return toPublicUser(response);
@@ -33,10 +43,16 @@ export async function login({ username, password }) {
 }
 
 export async function register(payload) {
-  return apiClient.request("/users/add", {
-    method: "POST",
-    body: payload,
-  });
+  try {
+    return await apiClient.request("/users/add", {
+      method: "POST",
+      body: payload,
+    });
+  } finally {
+    if (payload && Object.hasOwn(payload, "password")) {
+      payload.password = "";
+    }
+  }
 }
 
 export async function validateSession() {
@@ -70,4 +86,3 @@ export default {
   logout,
   hasSession,
 };
-
