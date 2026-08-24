@@ -18,6 +18,21 @@ export function positiveNumber(value, label = "Este valor") {
   return Number.isFinite(Number(value)) && Number(value) > 0 ? "" : `${label} debe ser un número positivo.`;
 }
 
+export function numberRange(value, { label = "Este valor", min, max } = {}) {
+  if (value === "" || value === null || value === undefined) {
+    return "";
+  }
+
+  const number = Number(value);
+  if (min !== undefined && number < Number(min)) {
+    return `${label} debe ser mayor o igual que ${min}.`;
+  }
+  if (max !== undefined && number > Number(max)) {
+    return `${label} debe ser menor o igual que ${max}.`;
+  }
+  return "";
+}
+
 export function reasonableLength(value, { label = "Este campo", min = 0, max = 500 } = {}) {
   const length = String(value ?? "").trim().length;
   if (length < min) {
@@ -37,6 +52,11 @@ export function validateField(field, value) {
   }
   if (field.type === "number" && value !== "") {
     errors.push(positiveNumber(value, field.label));
+    errors.push(numberRange(value, {
+      label: field.label,
+      min: field.min,
+      max: field.max,
+    }));
   }
   if (field.minLength || field.maxLength) {
     errors.push(reasonableLength(value, {
@@ -63,8 +83,8 @@ export default {
   required,
   email,
   positiveNumber,
+  numberRange,
   reasonableLength,
   validateField,
   validateForm,
 };
-

@@ -49,7 +49,7 @@ function createNavigation(activeRoute) {
   return navigation;
 }
 
-export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = () => {} } = {}) {
+export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = () => {}, searchEnabled = true } = {}) {
   const element = document.createElement("div");
   const sidebar = document.createElement("aside");
   const brandButton = createBrandButton();
@@ -163,6 +163,7 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
   workspace.append(topbar, main);
   element.append(sidebar, overlay, workspace);
   search.setExpanded(!sidebar.classList.contains("is-collapsed"));
+  search.setDisabled(!searchEnabled);
 
   return Object.freeze({
     element,
@@ -177,4 +178,3 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
 }
 
 export default createAppShell;
-

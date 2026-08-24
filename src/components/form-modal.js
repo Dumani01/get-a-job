@@ -24,7 +24,7 @@ function createFieldControl(field, value) {
     control.type = field.type ?? "text";
   }
 
-  control.className = "jc-input";
+  control.className = field.type === "checkbox" ? "jc-input jc-input--checkbox" : "jc-input";
   control.id = `field-${field.name}`;
   control.name = field.name;
   control.required = Boolean(field.required);
@@ -190,6 +190,11 @@ export function createFormModal() {
       error.dataset.fieldError = field.name;
       error.id = `${control.id}-error`;
       control.setAttribute("aria-describedby", error.id);
+      control.addEventListener("input", () => {
+        control.setAttribute("aria-invalid", "false");
+        error.textContent = "";
+        generalError.textContent = "";
+      });
       wrapper.append(label, control, error);
       fieldsContainer.append(wrapper);
     });
@@ -222,8 +227,12 @@ export function createFormModal() {
   panel.append(title, form);
   dialog.append(panel);
 
-  return Object.freeze({ element: dialog, open, close, setBusy });
+  function destroy() {
+    close();
+    dialog.remove();
+  }
+
+  return Object.freeze({ element: dialog, open, close, setBusy, destroy });
 }
 
 export default createFormModal;
-

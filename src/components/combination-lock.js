@@ -8,8 +8,12 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
   let activeMode = mode === "alphanumeric" ? "alphanumeric" : "numeric";
   let password = "";
   let digits = Array(NUMERIC_LENGTH).fill(0);
+  let digitOutputs = [];
 
   element.className = "jc-combination-lock";
+  element.setAttribute("role", "group");
+  element.setAttribute("aria-labelledby", "jobconnect-lock-label");
+  label.id = "jobconnect-lock-label";
   label.className = "jc-combination-lock__label";
   label.textContent = "Clave de acceso";
   controls.className = "jc-combination-lock__controls";
@@ -28,7 +32,7 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
   function updateDigit(index, difference) {
     digits[index] = (digits[index] + difference + 10) % 10;
     password = digits.join("");
-    renderControls();
+    digitOutputs[index].textContent = String(digits[index]);
     emitChange();
   }
 
@@ -51,12 +55,14 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
     decreaseButton.textContent = "−";
     increaseButton.addEventListener("click", () => updateDigit(index, 1));
     decreaseButton.addEventListener("click", () => updateDigit(index, -1));
+    digitOutputs[index] = digit;
     group.append(increaseButton, digit, decreaseButton);
     return group;
   }
 
   function renderControls() {
     controls.replaceChildren();
+    digitOutputs = [];
 
     if (activeMode === "numeric") {
       digits.forEach((value, index) => controls.append(createDigitControl(value, index)));
@@ -71,6 +77,7 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
     input.autocomplete = "current-password";
     input.placeholder = "Escribí la clave de prueba";
     input.setAttribute("aria-label", "Clave alfanumérica");
+    input.setAttribute("aria-required", "true");
     input.value = password;
     input.addEventListener("input", () => {
       password = input.value;
@@ -82,7 +89,8 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
 
   function setMode(nextMode) {
     activeMode = nextMode === "alphanumeric" ? "alphanumeric" : "numeric";
-    password = activeMode === "numeric" ? digits.join("") : "";
+    password = "";
+    digits = Array(NUMERIC_LENGTH).fill(0);
     renderControls();
     emitChange();
   }
@@ -96,12 +104,12 @@ export function createCombinationLock({ mode = "numeric" } = {}) {
 
   toggleButton.addEventListener("click", () => {
     setMode(activeMode === "numeric" ? "alphanumeric" : "numeric");
+    controls.querySelector("button, input")?.focus();
   });
   element.append(label, controls, toggleButton);
-  setMode(activeMode);
+  renderControls();
 
   return Object.freeze({ element, clear, setMode, getValue: () => password });
 }
 
 export default createCombinationLock;
-

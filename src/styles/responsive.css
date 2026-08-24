@@ -16,7 +16,7 @@
     margin-left: var(--sidebar-collapsed);
   }
 
-  .jc-dashboard-placeholder__grid {
+  .jc-dashboard__metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -84,7 +84,8 @@
   }
 
   .jc-form-grid,
-  .jc-dashboard-placeholder__grid {
+  .jc-dashboard__modules,
+  .jc-how-grid {
     grid-template-columns: 1fr;
   }
 
@@ -114,6 +115,10 @@
   .jc-record-card__actions {
     justify-content: space-between;
   }
+
+  .jc-dashboard__metrics {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -126,4 +131,3 @@
     transition-duration: 1ms !important;
   }
 }
-
