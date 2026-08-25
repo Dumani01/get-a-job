@@ -22,10 +22,10 @@ export function createPortalHeader() {
 
   const logo = document.createElement("img");
   logo.className = "jc-portal-brand-logo";
-  logo.src = "/src/assets/jobconnect-logo.svg";
-  logo.alt = "";
-  logo.width = 32;
-  logo.height = 32;
+  logo.src = "/src/assets/logo-circular.jpeg";
+  logo.alt = "Logo JobConnect";
+  logo.width = 40;
+  logo.height = 40;
 
   const brandText = document.createElement("span");
   brandText.className = "jc-portal-brand-text";

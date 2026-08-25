@@ -46,11 +46,13 @@
 
 .jc-portal-brand-logo {
   display: block;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border: 2px solid var(--color-border);
+  border-radius: 50%;
   background: var(--color-surface);
   box-shadow: 3px 3px 0 var(--color-border);
+  object-fit: cover;
 }
 
 .jc-portal-nav {
