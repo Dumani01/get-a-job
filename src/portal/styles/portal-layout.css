@@ -1,0 +1,123 @@
+.jc-portal-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--color-bg);
+}
+
+.jc-portal-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.jc-portal-header-inner,
+.jc-portal-footer-inner,
+.jc-portal-main {
+  width: min(100% - 2rem, var(--content-max));
+  margin-inline: auto;
+}
+
+.jc-portal-header-inner {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.jc-portal-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.jc-portal-brand-logo {
+  display: block;
+}
+
+.jc-portal-brand-text {
+  letter-spacing: -0.02em;
+}
+
+.jc-portal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-inline-start: auto;
+}
+
+.jc-portal-nav-link,
+.jc-portal-account-link {
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.jc-portal-nav-link:hover,
+.jc-portal-account-link:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.jc-portal-account-link {
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.jc-portal-main {
+  padding-block: 3rem;
+}
+
+.jc-portal-footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.jc-portal-footer-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  padding-block: 2rem;
+}
+
+.jc-portal-footer-identity,
+.jc-portal-footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.jc-portal-footer-title {
+  font-size: 1.1rem;
+}
+
+.jc-portal-footer-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.jc-portal-footer-link:hover {
+  color: var(--color-text);
+}
+
+.jc-portal-demo-notice {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.jc-portal-status-region {
+  position: fixed;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

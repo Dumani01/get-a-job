@@ -1,0 +1,175 @@
+.jc-portal-page {
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.jc-portal-page-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.jc-portal-page-message {
+  max-width: 70ch;
+  margin: 1rem 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.jc-portal-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jc-portal-social-item {
+  min-width: 0;
+}
+
+.jc-portal-social-link {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.jc-portal-social-link:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+.jc-portal-loader,
+.jc-portal-empty-state,
+.jc-portal-skeleton,
+.jc-portal-job-card,
+.jc-portal-job-filters,
+.jc-portal-application-form {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.jc-portal-loader-label,
+.jc-portal-empty-state-message,
+.jc-portal-job-card-message,
+.jc-portal-job-filters-message,
+.jc-portal-application-form-message {
+  color: var(--color-text-muted);
+}
+
+.jc-portal-empty-state-title,
+.jc-portal-job-card-title,
+.jc-portal-job-filters-title,
+.jc-portal-application-form-title {
+  margin-top: 0;
+}
+
+.jc-portal-skeleton-line {
+  display: block;
+  block-size: 1rem;
+  inline-size: 70%;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-hover);
+}
+
+.jc-portal-search,
+.jc-portal-combination-lock {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.jc-portal-search-label,
+.jc-portal-combination-lock-label {
+  font-weight: 700;
+}
+
+.jc-portal-search-input,
+.jc-portal-combination-lock-input {
+  min-width: 0;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.jc-portal-search-button,
+.jc-portal-save-job-button,
+.jc-portal-delete-job-button,
+.jc-portal-confirm-dialog-cancel,
+.jc-portal-confirm-dialog-confirm {
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.jc-portal-confirm-dialog {
+  max-width: min(92vw, 32rem);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+}
+
+.jc-portal-confirm-dialog-title,
+.jc-portal-application-modal-title {
+  margin-top: 0;
+}
+
+.jc-portal-confirm-dialog-message,
+.jc-portal-application-modal-message {
+  color: var(--color-text-muted);
+}
+
+.jc-portal-confirm-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.jc-portal-application-modal {
+  max-width: min(92vw, 40rem);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.jc-portal-toast {
+  max-width: min(90vw, 28rem);
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+}
+
+.jc-portal-toast-success {
+  border-color: var(--color-success);
+}
+
+.jc-portal-toast-warning {
+  border-color: var(--color-warning);
+}
+
+.jc-portal-toast-error {
+  border-color: var(--color-danger);
+}

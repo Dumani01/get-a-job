@@ -1,0 +1,44 @@
+@media (max-width: 767px) {
+  .jc-portal-header-inner {
+    min-height: auto;
+    flex-wrap: wrap;
+    padding-block: 0.75rem;
+  }
+
+  .jc-portal-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .jc-portal-account-link {
+    margin-inline-start: auto;
+  }
+
+  .jc-portal-main {
+    padding-block: 1.5rem;
+  }
+
+  .jc-portal-footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .jc-portal-page {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .jc-portal-footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-portal-skip-link,
+  .jc-portal-nav-link,
+  .jc-portal-account-link {
+    transition: none;
+  }
+}
