@@ -37,6 +37,23 @@
     font-size: clamp(1.6rem, 9vw, 2.4rem);
   }
 
+  .jc-portal-jobs-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .jc-portal-job-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jc-portal-results-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .jc-portal-sort-select {
+    width: 100%;
+  }
+
   .jc-portal-footer-nav {
     grid-template-columns: repeat(3, max-content);
     overflow-x: auto;
