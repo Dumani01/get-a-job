@@ -34,9 +34,9 @@ export function createSearchBar({ onSearch = () => {} } = {}) {
 
   form.className = "jc-search";
   form.setAttribute("role", "search");
-  label.className = "jc-visually-hidden";
+  label.className = "jc-search__label";
   label.htmlFor = "jobconnect-search";
-  label.textContent = "Buscar en el módulo activo";
+  label.textContent = "QUEST LOG /";
   corner.className = "jc-search__corner";
   corner.setAttribute("aria-hidden", "true");
   icon.className = "jc-search__icon";
