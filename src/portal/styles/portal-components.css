@@ -51,8 +51,7 @@
 .jc-portal-social-link:hover {
   background: var(--color-surface-hover);
   color: var(--color-text);
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--color-border);
+  box-shadow: 3px 3px 0 var(--color-accent);
 }
 
 .jc-portal-loader,
@@ -145,7 +144,7 @@
 .jc-portal-confirm-dialog-confirm:hover {
   background: var(--color-accent);
   color: var(--color-accent-contrast);
-  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-border);
 }
 
 .jc-portal-search-button:active,
