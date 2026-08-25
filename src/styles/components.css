@@ -231,8 +231,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   flex: 0 0 auto;
   border: 2px solid var(--color-border);
   border-radius: var(--radius-pixel);
@@ -242,13 +242,15 @@
   font-size: 1.15rem;
   cursor: pointer;
   box-shadow: var(--shadow-pixel-sm);
-  transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .jc-theme-toggle:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--color-border-strong);
+  box-shadow: 5px 5px 0 var(--jc-border-dark);
+  border-color: var(--jc-accent-primary);
   background: var(--color-surface-hover);
+  color: var(--jc-accent-primary);
 }
 
 .jc-card,
