@@ -1,3 +1,22 @@
+.jc-portal-page-message::before {
+  content: ">";
+  display: inline-block;
+  margin-inline-end: 0.55rem;
+  color: var(--color-accent);
+  font-family: var(--font-pixel);
+  font-weight: 800;
+}
+
+.jc-portal-auth-page {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+  min-height: 360px;
+}
+
+.jc-portal-employer-form-page {
+  border-inline-start: 8px solid var(--color-accent);
+}
 .jc-portal-auth-page,
 .jc-portal-employer-form-page {
   max-width: 760px;

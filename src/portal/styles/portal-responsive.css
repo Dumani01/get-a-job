@@ -16,6 +16,11 @@
     margin-inline-start: auto;
   }
 
+  .jc-portal-nav-link,
+  .jc-portal-account-link {
+    font-size: 0.74rem;
+  }
+
   .jc-portal-main {
     padding-block: 1.5rem;
   }
@@ -26,6 +31,15 @@
 
   .jc-portal-page {
     padding: 1.25rem;
+  }
+
+  .jc-portal-page-title {
+    font-size: clamp(1.6rem, 9vw, 2.4rem);
+  }
+
+  .jc-portal-footer-nav {
+    grid-template-columns: repeat(3, max-content);
+    overflow-x: auto;
   }
 }
 

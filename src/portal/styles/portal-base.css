@@ -12,7 +12,10 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--color-bg);
+  background-color: var(--color-bg);
+  background-image: linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center;
   color: var(--color-text);
 }
 
@@ -43,7 +46,10 @@ a {
   inset-inline-start: 1rem;
   z-index: 1000;
   padding: 0.75rem 1rem;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  border: 2px solid var(--color-border);
+  border-top: 0;
+  border-radius: 0;
+  box-shadow: var(--shadow-pixel-sm);
   background: var(--color-accent);
   color: var(--color-accent-contrast);
   transform: translateY(-120%);

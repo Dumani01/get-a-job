@@ -7,6 +7,126 @@
 
 .jc-portal-header {
   position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 2px solid var(--color-border);
+  background: var(--color-bg);
+  box-shadow: 0 5px 0 rgb(0 0 0 / 24%);
+}
+
+.jc-portal-header-inner,
+.jc-portal-main,
+.jc-portal-footer-inner {
+  width: min(100% - 2rem, var(--content-max));
+  margin-inline: auto;
+}
+
+.jc-portal-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 76px;
+}
+
+.jc-portal-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-text);
+  font-family: var(--font-pixel);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.jc-portal-brand-logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 3px 3px 0 var(--color-border);
+}
+
+.jc-portal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-inline: auto;
+}
+
+.jc-portal-nav-link,
+.jc-portal-account-link,
+.jc-portal-footer-link {
+  padding: 0.6rem 0.75rem;
+  border: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-pixel);
+  font-size: 0.82rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.jc-portal-nav-link:hover,
+.jc-portal-nav-link:focus-visible,
+.jc-portal-account-link:hover,
+.jc-portal-account-link:focus-visible,
+.jc-portal-footer-link:hover,
+.jc-portal-footer-link:focus-visible {
+  border-color: var(--color-border);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  transform: translate(-2px, -2px);
+}
+
+.jc-portal-account-link {
+  border-color: var(--color-border);
+  color: var(--color-text);
+  box-shadow: 3px 3px 0 var(--color-border);
+}
+
+.jc-portal-main {
+  display: grid;
+  align-content: start;
+  gap: 1.5rem;
+  padding-block: clamp(2rem, 6vw, 5rem);
+}
+
+.jc-portal-footer {
+  border-top: 2px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.jc-portal-footer-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2rem;
+  padding-block: 2rem;
+}
+
+.jc-portal-footer-title {
+  color: var(--color-accent);
+  font-family: var(--font-pixel);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.jc-portal-demo-notice {
+  max-width: 42ch;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.jc-portal-footer-nav {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+}
+
+.jc-portal-header {
+  position: sticky;
   inset-block-start: 0;
   z-index: 50;
   border-bottom: 1px solid var(--color-border);

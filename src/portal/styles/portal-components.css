@@ -1,15 +1,17 @@
 .jc-portal-page {
-  padding: 2rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  position: relative;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border: 2px solid var(--color-border);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-pixel-md);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
 }
 
 .jc-portal-page-title {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 3rem);
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
+  line-height: 1.05;
 }
 
 .jc-portal-page-message {
@@ -37,16 +39,20 @@
   display: inline-flex;
   max-width: 100%;
   padding: 0.55rem 0.7rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  box-shadow: 3px 3px 0 var(--color-border);
   color: var(--color-text-muted);
   text-decoration: none;
   overflow-wrap: anywhere;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
 }
 
 .jc-portal-social-link:hover {
   background: var(--color-surface-hover);
   color: var(--color-text);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--color-border);
 }
 
 .jc-portal-loader,
@@ -55,10 +61,11 @@
 .jc-portal-job-card,
 .jc-portal-job-filters,
 .jc-portal-application-form {
-  padding: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-portal-loader-label,
@@ -80,8 +87,8 @@
   display: block;
   block-size: 1rem;
   inline-size: 70%;
-  border-radius: var(--radius-sm);
-  background: var(--color-surface-hover);
+  border-radius: 0;
+  background: repeating-linear-gradient(90deg, var(--color-surface-hover) 0 14px, var(--color-border) 14px 18px);
 }
 
 .jc-portal-search,
@@ -99,11 +106,20 @@
 .jc-portal-combination-lock-input {
   min-width: 0;
   width: 100%;
+  min-height: 52px;
   padding: 0.8rem 0.9rem;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface);
   color: var(--color-text);
+  box-shadow: 4px 4px 0 var(--color-border);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.jc-portal-search-input:focus,
+.jc-portal-combination-lock-input:focus {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-accent);
 }
 
 .jc-portal-search-button,
@@ -113,20 +129,41 @@
 .jc-portal-confirm-dialog-confirm {
   min-height: 44px;
   padding: 0.7rem 1rem;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   color: var(--color-text);
   cursor: pointer;
+  box-shadow: var(--shadow-pixel-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.jc-portal-search-button:hover,
+.jc-portal-save-job-button:hover,
+.jc-portal-delete-job-button:hover,
+.jc-portal-confirm-dialog-cancel:hover,
+.jc-portal-confirm-dialog-confirm:hover {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  transform: translate(-2px, -2px);
+}
+
+.jc-portal-search-button:active,
+.jc-portal-save-job-button:active,
+.jc-portal-delete-job-button:active,
+.jc-portal-confirm-dialog-cancel:active,
+.jc-portal-confirm-dialog-confirm:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--color-border);
 }
 
 .jc-portal-confirm-dialog {
   max-width: min(92vw, 32rem);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-pixel-md);
 }
 
 .jc-portal-confirm-dialog-title,
@@ -147,19 +184,21 @@
 
 .jc-portal-application-modal {
   max-width: min(92vw, 40rem);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
   color: var(--color-text);
+  box-shadow: var(--shadow-pixel-md);
 }
 
 .jc-portal-toast {
   max-width: min(90vw, 28rem);
   padding: 0.85rem 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   color: var(--color-text);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-portal-toast-success {
