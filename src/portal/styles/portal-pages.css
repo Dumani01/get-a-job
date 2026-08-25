@@ -135,15 +135,30 @@
 }
 
 .jc-portal-job-card-eyebrow {
-  display: inline-block;
-  margin-bottom: 0.9rem;
-  padding: 0.25rem 0.45rem;
-  background: var(--color-border);
-  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.15rem;
+  padding: 0.35rem 0.6rem 0.35rem 0.45rem;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-pixel);
+  background: var(--color-accent);
+  box-shadow: 3px 3px 0 var(--color-border);
+  color: var(--color-accent-contrast);
   font-family: var(--font-pixel);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.jc-portal-job-card-eyebrow::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 2px solid var(--color-accent-contrast);
+  background: var(--color-border);
+  box-shadow: 2px 2px 0 var(--color-accent-contrast);
 }
 
 .jc-portal-job-card-company,
@@ -216,6 +231,10 @@
 .jc-portal-filter-groups {
   display: grid;
   gap: 1rem;
+}
+
+.jc-portal-job-filters > .jc-portal-btn {
+  margin-bottom: 0.8rem;
 }
 
 .jc-portal-filter-group {
