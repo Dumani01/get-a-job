@@ -144,6 +144,39 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
   breadcrumb.textContent = APP_NAME;
   pageTitle.className = "jc-topbar__title";
   pageTitle.textContent = NAVIGATION_ITEMS.find(({ route }) => route === activeRoute)?.label ?? APP_NAME;
+  function createThemeToggleButton() {
+    const button = document.createElement("button");
+    button.className = "jc-theme-toggle";
+    button.type = "button";
+
+    const getTheme = () => document.documentElement.getAttribute("data-theme") || "light";
+
+    const updateUI = () => {
+      const isDark = getTheme() === "dark";
+      const iconPath = isDark
+        ? "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        : "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z";
+      const icon = createLineIcon(iconPath, "jc-theme-toggle__icon");
+      button.replaceChildren(icon);
+      const label = isDark ? "Cambiar a Modo Claro (Pergamino)" : "Cambiar a Modo Oscuro (Noche 16-bit)";
+      button.setAttribute("aria-label", label);
+      button.title = label;
+    };
+
+    const initialTheme = localStorage.getItem("jobconnect-theme") || "light";
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    updateUI();
+
+    button.addEventListener("click", () => {
+      const newTheme = getTheme() === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("jobconnect-theme", newTheme);
+      updateUI();
+    });
+
+    return button;
+  }
+
   main.id = "main-content";
   main.className = "jc-main-content";
   main.tabIndex = -1;
@@ -210,10 +243,12 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
   });
   document.addEventListener("keydown", handleEscape);
 
+  const themeToggle = createThemeToggleButton();
+
   sidebarFooter.append(socialLinks, logoutButton);
   sidebar.append(brandButton, navigation, sidebarFooter);
   topbarHeading.append(breadcrumb, pageTitle);
-  topbar.append(menuButton, topbarHeading, search.element);
+  topbar.append(menuButton, topbarHeading, search.element, themeToggle);
   workspace.append(topbar, main);
   element.append(sidebar, overlay, workspace);
   search.setExpanded(!sidebar.classList.contains("is-collapsed"));
