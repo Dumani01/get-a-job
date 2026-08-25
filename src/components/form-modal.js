@@ -30,48 +30,62 @@ function createFieldControl(field, value) {
   control.required = Boolean(field.required);
   control.disabled = Boolean(field.readonly);
 
-  if (field.placeholder) {
-    control.placeholder = field.placeholder;
-  }
-  if (field.min !== undefined) {
-    control.min = String(field.min);
-  }
-  if (field.max !== undefined) {
-    control.max = String(field.max);
-  }
-  if (field.minLength !== undefined) {
-    control.minLength = field.minLength;
-  }
-  if (field.maxLength !== undefined) {
-    control.maxLength = field.maxLength;
-  }
+  if (field.placeholder) control.placeholder = field.placeholder;
+  if (field.min !== undefined) control.min = String(field.min);
+  if (field.max !== undefined) control.max = String(field.max);
+  if (field.minLength !== undefined) control.minLength = field.minLength;
+  if (field.maxLength !== undefined) control.maxLength = field.maxLength;
 
   if (control.type === "checkbox") {
     control.checked = Boolean(value);
   } else {
     control.value = value ?? "";
   }
-
   return control;
+}
+
+function createSaveIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  path.setAttribute("d", "M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z");
+  svg.append(path);
+  return svg;
 }
 
 export function createFormModal() {
   const dialog = document.createElement("dialog");
   const panel = document.createElement("div");
+  const header = document.createElement("header");
+  const headingGroup = document.createElement("div");
+  const eyebrow = document.createElement("span");
   const title = document.createElement("h2");
+  const closeButton = document.createElement("button");
   const form = document.createElement("form");
   const fieldsContainer = document.createElement("div");
   const generalError = document.createElement("p");
   const actions = document.createElement("div");
   const cancelButton = document.createElement("button");
   const saveButton = document.createElement("button");
+  const saveIcon = createSaveIcon();
+  const saveLabel = document.createElement("span");
   let activeFields = [];
   let submitHandler = null;
   let lastFocusedElement = null;
 
-  dialog.className = "jc-modal";
+  dialog.className = "jc-modal jc-form-modal";
   panel.className = "jc-modal__panel";
+  header.className = "jc-modal__header";
+  headingGroup.className = "jc-modal__heading";
+  eyebrow.className = "jc-modal__eyebrow";
+  eyebrow.textContent = "GESTIÓN DE REGISTRO";
   title.id = "form-modal-title";
+  closeButton.className = "jc-modal__close";
+  closeButton.type = "button";
+  closeButton.setAttribute("aria-label", "Cerrar formulario");
+  closeButton.title = "Cerrar formulario";
+  closeButton.textContent = "x";
   form.noValidate = true;
   fieldsContainer.className = "jc-form-grid";
   generalError.className = "jc-form-error";
@@ -81,23 +95,25 @@ export function createFormModal() {
   cancelButton.type = "button";
   cancelButton.dataset.action = "cancel";
   cancelButton.textContent = "Cancelar";
-  saveButton.className = "jc-btn jc-btn--primary";
+  saveButton.className = "jc-btn jc-btn--primary jc-save-button";
   saveButton.type = "submit";
   saveButton.dataset.action = "save";
-  saveButton.textContent = "Guardar";
+  saveIcon.classList.add("jc-save-button__icon");
+  saveLabel.className = "jc-save-button__label";
+  saveLabel.textContent = "Guardar";
+  saveButton.append(saveIcon, saveLabel);
   dialog.setAttribute("aria-labelledby", title.id);
 
   function setBusy(isBusy) {
     saveButton.disabled = isBusy;
     cancelButton.disabled = isBusy;
+    closeButton.disabled = isBusy;
     saveButton.classList.toggle("is-loading", isBusy);
-    saveButton.textContent = isBusy ? "Guardando…" : "Guardar";
+    saveLabel.textContent = isBusy ? "Guardando..." : "Guardar";
   }
 
   function close() {
-    if (dialog.open) {
-      dialog.close();
-    }
+    if (dialog.open) dialog.close();
     form.reset();
     generalError.textContent = "";
     submitHandler = null;
@@ -118,9 +134,7 @@ export function createFormModal() {
       const errorElement = form.querySelector(`[data-field-error="${field.name}"]`);
       const message = errors[field.name]?.[0] ?? "";
       control?.setAttribute("aria-invalid", String(Boolean(message)));
-      if (errorElement) {
-        errorElement.textContent = message;
-      }
+      if (errorElement) errorElement.textContent = message;
     });
   }
 
@@ -130,7 +144,6 @@ export function createFormModal() {
     const values = getValues();
     const errors = validateForm(activeFields, values);
     showErrors(errors);
-
     if (Object.keys(errors).length > 0) {
       form.querySelector("[aria-invalid='true']")?.focus();
       return;
@@ -153,15 +166,10 @@ export function createFormModal() {
       close();
       return;
     }
-
-    if (event.key !== "Tab") {
-      return;
-    }
-
+    if (event.key !== "Tab") return;
     const focusableElements = getFocusableElements(dialog);
     const first = focusableElements[0];
     const last = focusableElements.at(-1);
-
     if (event.shiftKey && document.activeElement === first) {
       event.preventDefault();
       last?.focus();
@@ -173,17 +181,13 @@ export function createFormModal() {
 
   function renderFields(fields, values) {
     fieldsContainer.replaceChildren();
-
     fields.forEach((field) => {
       const wrapper = document.createElement("div");
       const label = document.createElement("label");
       const control = createFieldControl(field, values[field.name]);
       const error = document.createElement("small");
-
       wrapper.className = "jc-field";
-      if (field.type === "textarea") {
-        wrapper.classList.add("jc-field--wide");
-      }
+      if (field.type === "textarea") wrapper.classList.add("jc-field--wide");
       label.htmlFor = control.id;
       label.textContent = field.required ? `${field.label} *` : field.label;
       error.className = "jc-field__error";
@@ -201,9 +205,7 @@ export function createFormModal() {
   }
 
   function open({ title: nextTitle = "Nuevo registro", fields = [], values = {}, onSubmit } = {}) {
-    if (!dialog.isConnected) {
-      document.body.append(dialog);
-    }
+    if (!dialog.isConnected) document.body.append(dialog);
     lastFocusedElement = document.activeElement;
     activeFields = fields;
     submitHandler = onSubmit;
@@ -213,18 +215,19 @@ export function createFormModal() {
     getFocusableElements(dialog)[0]?.focus();
   }
 
+  closeButton.addEventListener("click", close);
   cancelButton.addEventListener("click", close);
   form.addEventListener("submit", handleSubmit);
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
-    if (!saveButton.disabled) {
-      close();
-    }
+    if (!saveButton.disabled) close();
   });
   dialog.addEventListener("keydown", handleKeydown);
+  headingGroup.append(eyebrow, title);
+  header.append(headingGroup, closeButton);
   actions.append(cancelButton, saveButton);
   form.append(fieldsContainer, generalError, actions);
-  panel.append(title, form);
+  panel.append(header, form);
   dialog.append(panel);
 
   function destroy() {

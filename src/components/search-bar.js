@@ -1,7 +1,25 @@
+function createSearchIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const handle = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  circle.setAttribute("cx", "10.5");
+  circle.setAttribute("cy", "10.5");
+  circle.setAttribute("r", "6.5");
+  handle.setAttribute("d", "m15.5 15.5 4.5 4.5");
+  svg.append(circle, handle);
+  return svg;
+}
+
 export function createSearchBar({ onSearch = () => {} } = {}) {
   const form = document.createElement("form");
   const label = document.createElement("label");
+  const corner = document.createElement("span");
+  const icon = document.createElement("span");
   const input = document.createElement("input");
+  const status = document.createElement("span");
+  const statusDot = document.createElement("span");
   const clearButton = document.createElement("button");
 
   form.className = "jc-search";
@@ -9,26 +27,37 @@ export function createSearchBar({ onSearch = () => {} } = {}) {
   label.className = "jc-visually-hidden";
   label.htmlFor = "jobconnect-search";
   label.textContent = "Buscar en el módulo activo";
-  input.className = "jc-input";
+  corner.className = "jc-search__corner";
+  corner.setAttribute("aria-hidden", "true");
+  icon.className = "jc-search__icon";
+  icon.append(createSearchIcon());
+  input.className = "jc-search__input";
   input.id = "jobconnect-search";
   input.name = "search";
   input.type = "search";
-  input.placeholder = "Buscar en el módulo activo";
+  input.placeholder = "Buscar registros...";
   input.autocomplete = "off";
-  clearButton.className = "jc-btn jc-btn--secondary jc-btn--icon";
+  status.className = "jc-search__status";
+  statusDot.className = "jc-search__status-dot";
+  status.append(statusDot, "ONLINE");
+  clearButton.className = "jc-search__clear";
   clearButton.type = "button";
   clearButton.setAttribute("aria-label", "Limpiar búsqueda");
   clearButton.title = "Limpiar búsqueda";
-  clearButton.textContent = "×";
+  clearButton.textContent = "x";
 
-  input.addEventListener("input", () => onSearch(input.value.trim()));
+  input.addEventListener("input", () => {
+    form.classList.toggle("has-value", input.value.length > 0);
+    onSearch(input.value.trim());
+  });
   clearButton.addEventListener("click", () => {
     input.value = "";
+    form.classList.remove("has-value");
     input.focus();
     onSearch("");
   });
   form.addEventListener("submit", (event) => event.preventDefault());
-  form.append(label, input, clearButton);
+  form.append(label, corner, icon, input, status, clearButton);
 
   function setExpanded(expanded) {
     form.classList.toggle("is-expanded", expanded);
@@ -36,6 +65,7 @@ export function createSearchBar({ onSearch = () => {} } = {}) {
 
   function setValue(value = "") {
     input.value = value;
+    form.classList.toggle("has-value", input.value.length > 0);
   }
 
   function setDisabled(disabled) {

@@ -3,7 +3,7 @@ import { createAppLoader } from "./components/app-loader.js";
 import { showToast } from "./components/toast.js";
 import { hasSession, validateSession } from "./core/auth-service.js";
 
-const MINIMUM_LOADER_TIME = 900;
+const MINIMUM_LOADER_TIME = 1200;
 
 function showStartupError(rootElement, error) {
   const message = document.createElement("p");
@@ -33,7 +33,7 @@ async function start() {
       try {
         await validateSession();
       } catch {
-        showToast("La sesión anterior venció. Iniciá sesión nuevamente.", { type: "warning" });
+        showToast("La sesión anterior venció. Inicia sesión nuevamente.", { type: "warning" });
       }
     }
 
