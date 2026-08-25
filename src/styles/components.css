@@ -1517,22 +1517,23 @@ textarea.jc-input {
 }
 
 .jc-record-card[class*="jc-record-card--"] dd:first-of-type {
-  padding: 0.6rem 0.8rem;
-  border: 2px solid var(--color-border);
-  background: var(--color-surface);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-raised);
   color: var(--color-text);
   font-family: var(--font-pixel);
-  font-size: 1.25rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  box-shadow: var(--shadow-pixel-sm);
-  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background 200ms ease;
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  box-shadow: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
 .jc-record-card[class*="jc-record-card--"] dd:first-of-type:hover {
-  transform: translateY(-2px);
+  transform: translateX(4px);
   border-color: var(--color-accent);
-  box-shadow: 6px 6px 0 var(--jc-border-dark);
+  background: var(--color-surface-hover);
+  box-shadow: 3px 3px 0 var(--jc-border-dark);
 }
 
 .jc-pagination {
