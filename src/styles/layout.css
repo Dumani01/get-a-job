@@ -53,11 +53,10 @@
   width: 52px;
   height: 52px;
   place-items: center;
-  border: 2px solid var(--color-accent);
+  border: 3px solid var(--color-accent);
   border-radius: 50%;
   background: var(--color-bg);
   overflow: hidden;
-  box-shadow: 0 0 0 3px var(--color-border);
   flex-shrink: 0;
 }
 
@@ -318,18 +317,7 @@
   padding: 0 clamp(1.2rem, 3vw, 2.5rem);
   border-bottom: 4px solid var(--jc-accent-primary);
   background: var(--color-bg);
-  box-shadow: 0 4px 0 var(--color-border);
-}
-
-.jc-topbar::before {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--color-border);
-  pointer-events: none;
+  box-shadow: 0 2px 0 var(--color-border);
 }
 
 .jc-topbar__heading {
@@ -338,8 +326,7 @@
   justify-content: center;
   min-width: 170px;
   gap: 0.18rem;
-  padding-right: 1.5rem;
-  border-right: 2px solid var(--color-border);
+  padding-right: 1rem;
   align-self: stretch;
 }
 

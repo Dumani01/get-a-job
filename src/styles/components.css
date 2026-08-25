@@ -434,12 +434,11 @@ textarea.jc-input {
   grid-template-columns: 42px minmax(0, 1fr) 38px;
   align-items: center;
   margin-left: auto;
-  overflow: visible;
+  overflow: hidden;
   border: 2px solid var(--color-border);
-  border-radius: var(--radius-pixel);
+  border-radius: 999px;
   background: var(--color-surface);
-  box-shadow: 4px 4px 0 var(--color-border-strong);
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  box-shadow: none;
   transition: width var(--transition-base), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -454,8 +453,8 @@ textarea.jc-input {
 }
 
 .jc-search:focus-within {
-  border-color: var(--color-border);
-  box-shadow: 6px 6px 0 var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 .jc-search__label {
@@ -472,6 +471,11 @@ textarea.jc-input {
 
 .jc-search.is-expanded {
   width: min(100%, 540px);
+}
+
+/* Hide corner decoration for pill search */
+.jc-search__corner {
+  display: none;
 }
 
 .jc-search__corner {

@@ -155,7 +155,7 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
       const isDark = getTheme() === "dark";
       const iconPath = isDark
         ? "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-        : "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z";
+        : "M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-4M9 3V1m0 2v2M15 3V1m0 2v2M3 9h18";
       const icon = createLineIcon(iconPath, "jc-theme-toggle__icon");
       button.replaceChildren(icon);
       const label = isDark ? "Cambiar a Modo Claro (Pergamino)" : "Cambiar a Modo Oscuro (Noche 16-bit)";
