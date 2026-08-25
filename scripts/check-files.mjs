@@ -19,6 +19,7 @@ const requiredFiles = [
   "src/components/app-shell.js",
   "src/components/combination-lock.js",
   "src/components/confirm-dialog.js",
+  "src/components/deal-shuffle.js",
   "src/components/crud-view.js",
   "src/components/form-modal.js",
   "src/components/search-bar.js",

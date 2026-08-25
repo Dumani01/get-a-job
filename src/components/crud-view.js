@@ -1,3 +1,5 @@
+import { observeDealShuffleCards } from "./deal-shuffle.js";
+
 const PAGE_SIZE = 12;
 
 const ACTION_ICONS = Object.freeze({
@@ -293,6 +295,7 @@ export function createCrudView({ config, onAction = () => {} } = {}) {
     cards.className = "jc-record-grid";
     pageRecords.forEach((record) => cards.append(createRecordCard(record, columns)));
     content.append(cards);
+    observeDealShuffleCards(cards.children);
     renderPagination(pageCount);
   }
 

@@ -24,13 +24,13 @@
   position: relative;
   display: grid;
   width: 100%;
-  min-height: 72px;
+  min-height: 68px;
   flex: 0 0 auto;
-  grid-template-columns: 52px minmax(0, 1fr) 20px;
+  grid-template-columns: 48px minmax(0, 1fr) 20px;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0.85rem 0.6rem 0.6rem;
-  overflow: hidden;
+  gap: 0.7rem;
+  padding: 0.55rem 0.85rem 0.55rem 0.55rem;
+  overflow: visible;
   border: 2px solid var(--color-border-strong);
   border-radius: 999px;
   background: var(--color-surface-raised);
@@ -43,21 +43,21 @@
 
 .jc-sidebar__brand:hover,
 .jc-sidebar__brand:focus-visible {
-  border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-border));
+  border-color: var(--color-accent);
   background: var(--color-surface-hover);
-  box-shadow: inset 3px 0 0 var(--color-accent);
 }
 
 .jc-sidebar__brand-logo {
   display: grid;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   place-items: center;
-  border: 3px solid var(--color-accent);
+  border: 2px solid var(--color-accent);
   border-radius: 50%;
   background: var(--color-bg);
   overflow: hidden;
   flex-shrink: 0;
+  margin-left: 2px;
 }
 
 .jc-sidebar__brand-logo img {
@@ -264,6 +264,10 @@
   grid-template-columns: 48px;
   justify-content: center;
   padding: 0.35rem;
+}
+
+.jc-sidebar.is-collapsed .jc-sidebar__brand-logo {
+  margin-left: 0;
 }
 
 .jc-sidebar.is-collapsed .jc-sidebar__brand-text,
