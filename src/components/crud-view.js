@@ -72,13 +72,15 @@ function appendDisplayValue(container, record, column) {
     return;
   }
 
-  if (typeof rawValue === "boolean") {
-    const badge = document.createElement("span");
-    const label = rawValue ? "Sí" : "No";
-    badge.className = `jc-badge jc-badge--${rawValue ? "success" : "muted"}`;
-    badge.setAttribute("aria-label", `${column.label}: ${label}`);
-    badge.textContent = label;
-    container.append(badge);
+  if (typeof rawValue === "boolean" || column.key === "completed") {
+    const check = document.createElement("span");
+    const isChecked = rawValue === true || rawValue === "true";
+    const label = isChecked ? "Completada" : "Pendiente";
+    check.className = `jc-quest-check${isChecked ? " is-checked" : ""}`;
+    check.setAttribute("role", "img");
+    check.setAttribute("aria-label", `${column.label}: ${label}`);
+    check.textContent = isChecked ? "✓" : "";
+    container.append(check);
     return;
   }
   container.textContent = getDisplayValue(record, column);
@@ -207,9 +209,14 @@ export function createCrudView({ config, onAction = () => {} } = {}) {
     const details = document.createElement("dl");
     const actions = document.createElement("div");
     article.className = "jc-record-card";
+    article.classList.add(`jc-record-card--${config.key}`);
     article.dataset.recordId = String(record.id);
     cardTop.className = "jc-record-card__top";
     recordId.textContent = `REGISTRO #${record.id ?? "--"}`;
+    const mission = document.createElement("span");
+    mission.className = "jc-record-card__mission";
+    mission.textContent = `QUEST / ${config.singular.toUpperCase()}`;
+    cardTop.append(mission);
     cardTop.append(recordId);
     columns.forEach((column) => {
       const term = document.createElement("dt");

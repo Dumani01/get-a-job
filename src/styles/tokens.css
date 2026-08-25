@@ -1,24 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=VT323&display=swap");
+
 :root {
-  --color-bg: #f2ead6;
-  --color-surface: #fffaef;
-  --color-surface-raised: #f2ead6;
-  --color-surface-hover: #e6dcc5;
-  --color-border: #161310;
-  --color-border-strong: #161310;
-  --color-text: #161310;
-  --color-text-muted: #5f574d;
-  --color-accent: #2e5dd6;
-  --color-accent-hover: #4773df;
-  --color-accent-contrast: #fffaef;
-  --color-success: #2f6b4f;
-  --color-warning: #e6bd5a;
-  --color-danger: #e2522e;
-  --color-info: #2e5dd6;
-  --shadow-sm: 0 6px 18px rgb(0 0 0 / 20%);
-  --shadow-md: 0 18px 50px rgb(0 0 0 / 35%);
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --jc-bg-page: #f2e9d0;        /* fondo general de la app */
+  --jc-bg-card: #e8dcb8;        /* tarjetas, paneles, sidebar */
+  --jc-bg-card-alt: #d9c9a3;    /* inputs, hover, elementos secundarios */
+  --jc-border-dark: #3e2f1c;    /* bordes gruesos pixel-art (2-3px) */
+
+  --jc-accent-primary: #802b34;      /* botones primarios, nav activo (rojo vino) */
+  --jc-accent-primary-dark: #5c1c24; /* hover del rojo vino */
+  --jc-accent-secondary: #a9682f;    /* botones secundarios, badges (marrón madera) */
+  --jc-accent-gold: #c9a227;         /* XP, logros, elementos destacados (dorado) */
+  --jc-accent-alert: #8b3a2b;        /* alertas, badges urgentes (rojo ladrillo) */
+  --jc-accent-alert-dark: #6b241a;   /* hover de alertas */
+
+  --jc-text-dark: #3e2f1c;      /* texto principal — NUNCA usar negro puro (#000) */
+  --jc-text-light: #f7f1de;     /* texto sobre botones oscuros/verdes */
+  --jc-text-muted: #7a6a4f;     /* metadatos, fechas, contadores */
+  --jc-text-disabled: #a89a7c;  /* texto tachado/deshabilitado */
+
+  --jc-accent-blue: var(--jc-accent-primary);
+  --jc-accent-blue-dark: var(--jc-accent-primary-dark);
+  --jc-accent-orange: var(--jc-accent-secondary);
+  --jc-accent-green: var(--jc-accent-primary);
+  --jc-accent-green-light: var(--jc-accent-gold);
+  --jc-text-strike: var(--jc-text-disabled);
+  --jc-accent-green-light-value: var(--jc-accent-primary);
+
+  --color-bg: var(--jc-bg-page);
+  --color-surface: var(--jc-bg-card);
+  --color-surface-raised: var(--jc-bg-card-alt);
+  --color-surface-hover: var(--jc-bg-card-alt);
+  --color-border: var(--jc-border-dark);
+  --color-border-strong: var(--jc-border-dark);
+  --color-text: var(--jc-text-dark);
+  --color-text-muted: var(--jc-text-muted);
+  --color-accent: var(--jc-accent-primary);
+  --color-accent-hover: var(--jc-accent-primary-dark);
+  --color-accent-contrast: var(--jc-text-light);
+  --color-success: var(--jc-accent-primary);
+  --color-warning: var(--jc-accent-secondary);
+  --color-danger: var(--jc-accent-alert);
+  --color-info: var(--jc-accent-primary);
+  --color-text-strike: var(--jc-text-disabled);
+  --color-progress: var(--jc-accent-primary);
+  --color-gold: var(--jc-accent-gold);
+  --shadow-sm: 4px 4px 0 var(--jc-border-dark);
+  --shadow-md: 7px 7px 0 var(--jc-border-dark);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
   --sidebar-expanded: 280px;
   --sidebar-collapsed: 84px;
   --content-max: 1440px;
@@ -27,6 +57,19 @@
   --shadow-pixel-sm: 4px 4px 0 var(--color-border-strong);
   --shadow-pixel-md: 7px 7px 0 var(--color-border-strong);
   --radius-pixel: 3px;
-  --font-pixel: ui-monospace, "Cascadia Code", Consolas, monospace;
+  --font-pixel: "Pixelify Sans", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --font-hud: "VT323", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --jc-bg-page: #121016;        /* fondo oscuro noche 16-bit */
+  --jc-bg-card: #1f1a24;        /* tarjetas oscuras refinadas */
+  --jc-bg-card-alt: #2b2432;    /* inputs y hover oscuros */
+  --jc-border-dark: #524256;    /* bordes pixel-art oscuros */
+
+  --jc-text-dark: #f7f1de;      /* texto principal en modo oscuro */
+  --jc-text-light: #f7f1de;     /* texto sobre botones */
+  --jc-text-muted: #bdaeaf;     /* metadatos y subtítulos */
+  --jc-text-disabled: #6d5b62;  /* texto deshabilitado */
 }
 

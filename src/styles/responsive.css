@@ -10,6 +10,10 @@
   .jc-dashboard__modules {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  [data-module-key="vacancies"] .jc-record-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 1024px) {
@@ -227,6 +231,10 @@
     display: grid;
   }
 
+  [data-module-key="vacancies"] .jc-record-grid {
+    grid-template-columns: 1fr;
+  }
+
   .jc-record-card__actions {
     flex-wrap: wrap;
   }
@@ -256,10 +264,6 @@
 
   .jc-search {
     grid-template-columns: 38px minmax(0, 1fr) 32px;
-  }
-
-  .jc-search__status {
-    display: none;
   }
 
   .jc-dashboard__hero-actions,
