@@ -112,13 +112,12 @@
   background: var(--color-surface);
   color: var(--color-text);
   box-shadow: 4px 4px 0 var(--color-border);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  transition: none;
 }
 
 .jc-portal-search-input:focus,
 .jc-portal-combination-lock-input:focus {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--color-accent);
+  box-shadow: 4px 4px 0 var(--color-accent);
 }
 
 .jc-portal-search-button,

@@ -20,6 +20,10 @@
   max-width: 32rem;
 }
 
+.jc-portal-auth-form > .jc-portal-btn {
+  transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
 .jc-portal-auth-field,
 .jc-portal-combination-lock {
   display: grid;

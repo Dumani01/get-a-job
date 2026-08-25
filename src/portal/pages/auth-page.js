@@ -4,6 +4,7 @@ import { portalSession } from "../core/portal-session.js";
 
 const demoAccounts = Object.freeze({
   candidato: { password: "Job2026", role: PORTAL_ROLES.candidate, name: "Candidato JobConnect" },
+  emilys: { password: "emilyspass", role: PORTAL_ROLES.candidate, name: "Emily Johnson" },
   empresa: { password: "Hire2026", role: PORTAL_ROLES.employer, name: "Empresa demostrativa" },
 });
 
@@ -36,7 +37,7 @@ export function createAuthPage({ mode = "login" } = {}) {
   message.textContent = mode === "register" ? "Crea un perfil demostrativo para explorar el portal." : "Usa una cuenta de prueba para continuar.";
 
   const form = document.createElement("form");
-    form.className = "jc-portal-auth-form";
+  form.className = "jc-portal-auth-form";
   const username = createField(mode === "register" ? "Nombre de usuario" : "Usuario", "username");
   const lock = createCombinationLock();
   const error = document.createElement("p");
@@ -49,27 +50,27 @@ export function createAuthPage({ mode = "login" } = {}) {
   submit.textContent = mode === "register" ? "Crear cuenta" : "Ingresar";
   const demo = document.createElement("p");
   demo.className = "jc-portal-auth-demo";
-  demo.textContent = "Candidato: candidato / Job2026 · Empresa: empresa / Hire2026";
+  demo.textContent = "Candidato: candidato / Job2026 o emilys / emilyspass · Empresa: empresa / Hire2026";
 
   form.append(username.wrapper, lock, error, submit);
   form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const account = demoAccounts[username.input.value.trim().toLowerCase()];
-      const password = lock.querySelector("input")?.value ?? "";
+    event.preventDefault();
+    const account = demoAccounts[username.input.value.trim().toLowerCase()];
+    const password = lock.querySelector("input")?.value ?? "";
 
-      if (mode === "login" && (!account || account.password !== password)) {
-        error.textContent = "Usuario o clave de demostración incorrectos.";
-        error.hidden = false;
-        return;
-      }
+    if (mode === "login" && (!account || account.password !== password)) {
+      error.textContent = "Usuario o clave de demostración incorrectos.";
+      error.hidden = false;
+      return;
+    }
 
-      const selectedAccount = account ?? { role: PORTAL_ROLES.candidate, name: username.input.value.trim() };
-      const session = portalSession.set({ id: `${selectedAccount.role}-${username.input.value.trim()}`, username: username.input.value.trim(), name: selectedAccount.name, role: selectedAccount.role });
-      if (mode === "register") {
-        window.localStorage.setItem(PORTAL_STORAGE_KEYS.profile, JSON.stringify({ username: session.username, name: session.name, headline: "Nuevo perfil profesional" }));
-      }
-      const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
-      window.location.hash = redirect ? decodeURIComponent(redirect) : session.role === PORTAL_ROLES.employer ? "#/empresa/ofertas" : "#/perfil";
+    const selectedAccount = account ?? { role: PORTAL_ROLES.candidate, name: username.input.value.trim() };
+    const session = portalSession.set({ id: `${selectedAccount.role}-${username.input.value.trim()}`, username: username.input.value.trim(), name: selectedAccount.name, role: selectedAccount.role });
+    if (mode === "register") {
+      window.localStorage.setItem(PORTAL_STORAGE_KEYS.profile, JSON.stringify({ username: session.username, name: session.name, headline: "Nuevo perfil profesional" }));
+    }
+    const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
+    window.location.hash = redirect ? decodeURIComponent(redirect) : session.role === PORTAL_ROLES.employer ? "#/empresa/ofertas" : "#/perfil";
   });
 
   section.append(heading, message, form, demo);
