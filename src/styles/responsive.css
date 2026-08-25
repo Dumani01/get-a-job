@@ -318,7 +318,7 @@
 
   .jc-delete-button:hover:not(:disabled),
   .jc-delete-button:focus-visible {
-    width: 112px;
+    width: 100%;
   }
 }
 

@@ -43,15 +43,20 @@ La conexión real y las pantallas funcionales se implementarán en la Parte B. N
 
 ## Créditos de interfaz
 
-Los siguientes diseños se adaptarán a HTML, CSS y JavaScript vanilla, con selectores `jc-` y la identidad visual de JobConnect:
+La interfaz JobConnect adapta componentes publicados bajo licencia MIT en Uiverse:
 
-- [Redes sociales](https://uiverse.io/Praashoo7/silent-rabbit-57)
-- [Carga inicial](https://uiverse.io/Smit-Prajapati/spicy-rat-83)
-- [Candado de combinación](https://uiverse.io/dexter-st/good-pig-77)
-- [Botón Guardar](https://uiverse.io/icochran10/ugly-gecko-9)
-- [Botón Eliminar](https://uiverse.io/vinodjangid07/smart-emu-83)
-- [Login y registro](https://uiverse.io/andrew-demchenk0/afraid-cougar-9)
-- [Buscador](https://uiverse.io/santhosh_2608/purple-lizard-35)
+1. https://uiverse.io/uiverse-astronaut/new-kangaroo-72
+2. https://uiverse.io/uiverse-astronaut/witty-swan-38
+3. https://uiverse.io/uiverse-astronaut/good-ape-60
+4. https://uiverse.io/uiverse-astronaut/smooth-eel-7
+5. https://uiverse.io/uiverse-astronaut/fresh-cat-3
+6. https://uiverse.io/uiverse-astronaut/clever-snail-45
+7. https://uiverse.io/uiverse-astronaut/cuddly-elephant-44
+8. https://uiverse.io/uiverse-astronaut/lovely-otter-52
+
+Los componentes fueron reconstruidos con HTML, CSS y JavaScript vanilla,
+renombrando sus selectores con el prefijo `jc-` y adaptándolos a la identidad
+visual de JobConnect.
 
 ## Limitación de DummyJSON
 

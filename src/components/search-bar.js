@@ -12,6 +12,16 @@ function createSearchIcon() {
   return svg;
 }
 
+function createClearIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  path.setAttribute("d", "m7 7 10 10M17 7 7 17");
+  svg.append(path);
+  return svg;
+}
+
 export function createSearchBar({ onSearch = () => {} } = {}) {
   const form = document.createElement("form");
   const label = document.createElement("label");
@@ -44,7 +54,7 @@ export function createSearchBar({ onSearch = () => {} } = {}) {
   clearButton.type = "button";
   clearButton.setAttribute("aria-label", "Limpiar búsqueda");
   clearButton.title = "Limpiar búsqueda";
-  clearButton.textContent = "x";
+  clearButton.append(createClearIcon());
 
   input.addEventListener("input", () => {
     form.classList.toggle("has-value", input.value.length > 0);
