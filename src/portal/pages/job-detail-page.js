@@ -1,6 +1,8 @@
 import { jobsRepository } from "../core/jobs-repository.js";
 import { createJobCard } from "../features/job-card.js";
 import { createPortalEmptyState } from "../components/portal-empty-state.js";
+import { createApplicationForm } from "../features/application-form.js";
+import { portalSession } from "../core/portal-session.js";
 
 function listBlock(title, values) {
   const wrapper = document.createElement("section");
@@ -48,7 +50,7 @@ export function createJobDetailPage() {
   actions.className = "jc-portal-home-actions";
   const applyLink = document.createElement("a");
   applyLink.className = "jc-portal-btn jc-portal-btn--primary";
-  applyLink.href = "#/login?redirect=%23%2Fempleo%3Fid%3D" + encodeURIComponent(job.id);
+  applyLink.href = portalSession.hasRole("candidate") ? "#application-form" : "#/login?redirect=%23%2Fempleo%3Fid%3D" + encodeURIComponent(job.id);
   applyLink.textContent = "Postularme";
   const backLink = document.createElement("a");
   backLink.className = "jc-portal-btn jc-portal-btn--secondary";
@@ -63,6 +65,8 @@ export function createJobDetailPage() {
   related.className = "jc-portal-job-grid";
   jobsRepository.list({ status: "active", category: job.category }).filter((item) => item.id !== job.id).slice(0, 2).forEach((item) => related.append(createJobCard(item)));
 
-  section.append(heading, message, salary, description, listBlock("Responsabilidades", job.responsibilities), listBlock("Requisitos", job.requirements), listBlock("Beneficios", job.benefits), actions, relatedHeading, related);
+  const application = portalSession.hasRole("candidate") ? createApplicationForm({ job }) : null;
+  if (application) application.id = "application-form";
+  section.append(heading, message, salary, description, listBlock("Responsabilidades", job.responsibilities), listBlock("Requisitos", job.requirements), listBlock("Beneficios", job.benefits), actions, ...(application ? [application] : []), relatedHeading, related);
   return section;
 }

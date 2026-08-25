@@ -1,3 +1,7 @@
+import { createSaveJobButton } from "../components/save-job-button.js";
+import { portalSession } from "../core/portal-session.js";
+import { savedJobsRepository } from "../core/saved-jobs-repository.js";
+
 function formatSalary(salary) {
   if (!salary?.visible) {
     return "Salario no publicado";
@@ -53,7 +57,24 @@ export function createJobCard(job) {
   detailLink.href = `#/empleo?id=${encodeURIComponent(job.id)}`;
   detailLink.textContent = "Ver oferta";
 
-  actions.append(detailLink);
+  const session = portalSession.get();
+  const saveButton = createSaveJobButton({
+    saved: session?.role === "candidate" && savedJobsRepository.has(session.id, job.id),
+    onToggle() {
+      const currentSession = portalSession.get();
+      if (currentSession?.role !== "candidate") {
+        window.location.hash = `#/login?redirect=${encodeURIComponent(`#/empleo?id=${job.id}`)}`;
+        return;
+      }
+      const result = savedJobsRepository.toggle(currentSession.id, job.id);
+      saveButton.setAttribute("aria-pressed", String(result.saved));
+      saveButton.setAttribute("aria-label", result.saved ? "Quitar oferta de guardados" : "Guardar oferta");
+      saveButton.title = result.saved ? "Quitar de guardados" : "Guardar oferta";
+      saveButton.textContent = result.saved ? "Guardado" : "Guardar";
+    },
+  });
+
+  actions.append(detailLink, saveButton);
   article.append(eyebrow, heading, company, meta, salary, skills, actions);
 
   return article;

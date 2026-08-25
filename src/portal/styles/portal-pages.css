@@ -14,6 +14,70 @@
   min-height: 360px;
 }
 
+.jc-portal-auth-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+.jc-portal-auth-field,
+.jc-portal-combination-lock {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.jc-portal-auth-field label,
+.jc-portal-combination-lock-label {
+  color: var(--color-accent);
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.jc-portal-auth-input {
+  min-height: 48px;
+  padding: 0.7rem 0.8rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 4px 4px 0 var(--color-border);
+}
+
+.jc-portal-auth-error {
+  margin: 0;
+  color: var(--color-danger);
+}
+
+.jc-portal-auth-demo {
+  max-width: 55ch;
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px dashed var(--color-border-strong);
+  color: var(--color-text-muted);
+  font-family: var(--font-pixel);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.jc-portal-application-list {
+  display: grid;
+  gap: 1rem;
+  max-width: 52rem;
+}
+
+.jc-portal-application-form {
+  max-width: 48rem;
+  margin-top: 1.5rem;
+}
+
+.jc-portal-auth-form label {
+  color: var(--color-accent);
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
 .jc-portal-employer-form-page {
   border-inline-start: 8px solid var(--color-accent);
 }
