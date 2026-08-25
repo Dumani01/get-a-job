@@ -71,5 +71,9 @@
   --jc-text-light: #f7f1de;     /* texto sobre botones */
   --jc-text-muted: #bdaeaf;     /* metadatos y subtítulos */
   --jc-text-disabled: #6d5b62;  /* texto deshabilitado */
+
+  /* Sombras oscuras — se sobreescriben para evitar sombras blancas */
+  --shadow-pixel-sm: none;
+  --shadow-pixel-md: none;
 }
 
