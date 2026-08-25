@@ -40,6 +40,10 @@ a {
   outline-offset: 3px;
 }
 
+.jc-portal-main:focus {
+  outline: none;
+}
+
 .jc-portal-skip-link {
   position: fixed;
   inset-block-start: 0;
