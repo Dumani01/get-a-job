@@ -5,12 +5,14 @@ import { email, reasonableLength, required } from "../core/validators.js";
 function createField({ name, label, type = "text", autocomplete, placeholder }) {
   const wrapper = document.createElement("div");
   const labelElement = document.createElement("label");
+  const inputFrame = document.createElement("div");
   const input = document.createElement("input");
   const error = document.createElement("small");
 
   wrapper.className = "jc-field";
   labelElement.htmlFor = `auth-${name}`;
   labelElement.textContent = `${label} *`;
+  inputFrame.className = "jc-auth-input-frame";
   input.className = "jc-input";
   input.id = `auth-${name}`;
   input.name = name;
@@ -22,7 +24,8 @@ function createField({ name, label, type = "text", autocomplete, placeholder }) 
   error.className = "jc-field__error";
   error.id = `auth-${name}-error`;
   error.dataset.authError = name;
-  wrapper.append(labelElement, input, error);
+  inputFrame.append(input);
+  wrapper.append(labelElement, inputFrame, error);
   return { wrapper, input, error };
 }
 
@@ -30,9 +33,7 @@ function validateAuthValues(mode, values, password) {
   const errors = {};
   const setError = (name, ...messages) => {
     const message = messages.find(Boolean);
-    if (message) {
-      errors[name] = message;
-    }
+    if (message) errors[name] = message;
   };
 
   setError(
@@ -61,34 +62,45 @@ function validateAuthValues(mode, values, password) {
 
 export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   const page = document.createElement("main");
-  const card = document.createElement("section");
+  const ambient = document.createElement("div");
+  const stage = document.createElement("section");
   const brand = document.createElement("div");
+  const logoFrame = document.createElement("span");
   const logo = document.createElement("img");
+  const brandText = document.createElement("div");
   const name = document.createElement("strong");
+  const brandCaption = document.createElement("small");
+  const switchNavigation = document.createElement("nav");
+  const loginLink = document.createElement("a");
+  const switchTrack = document.createElement("span");
+  const switchThumb = document.createElement("span");
+  const registerLink = document.createElement("a");
+  const cardFrame = document.createElement("div");
+  const card = document.createElement("div");
+  const cardFace = document.createElement("div");
+  const cardHeader = document.createElement("header");
+  const securityBadge = document.createElement("span");
   const title = document.createElement("h1");
   const description = document.createElement("p");
-  const tabs = document.createElement("nav");
-  const loginLink = document.createElement("a");
-  const registerLink = document.createElement("a");
   const form = document.createElement("form");
   const fields = document.createElement("div");
   const usernameField = createField({
     name: "username",
     label: "Usuario",
     autocomplete: "username",
-    placeholder: "Escribí tu usuario",
+    placeholder: "Escribe tu usuario",
   });
   const firstNameField = createField({
     name: "firstName",
     label: "Nombre",
     autocomplete: "given-name",
-    placeholder: "Escribí tu nombre",
+    placeholder: "Escribe tu nombre",
   });
   const lastNameField = createField({
     name: "lastName",
     label: "Apellidos",
     autocomplete: "family-name",
-    placeholder: "Escribí tus apellidos",
+    placeholder: "Escribe tus apellidos",
   });
   const emailField = createField({
     name: "email",
@@ -97,50 +109,84 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     autocomplete: "email",
     placeholder: "nombre@correo.com",
   });
-  const lock = createCombinationLock({ mode: "numeric" });
+  const lock = createCombinationLock({ mode: "numeric", allowAlphanumeric: mode === "login" });
   const passwordError = document.createElement("small");
   const generalError = document.createElement("p");
   const securityNote = document.createElement("p");
   const submitButton = document.createElement("button");
+  const submitLabel = document.createElement("span");
+  const submitArrow = document.createElement("span");
   let password = "";
+  let navigationTimer = 0;
 
   page.className = "jc-auth-page";
+  page.dataset.authMode = mode;
   page.id = "main-content";
   page.tabIndex = -1;
-  card.className = "jc-auth-card";
-  brand.className = "jc-auth-card__brand";
+  ambient.className = "jc-auth-ambient";
+  ambient.setAttribute("aria-hidden", "true");
+  stage.className = "jc-auth-stage";
+  brand.className = "jc-auth-brand";
+  logoFrame.className = "jc-auth-brand__logo";
   logo.src = "/src/assets/jobconnect-logo.svg";
   logo.alt = "";
-  logo.width = 52;
-  logo.height = 52;
+  logo.width = 42;
+  logo.height = 42;
+  brandText.className = "jc-auth-brand__text";
   name.textContent = APP_NAME;
-  title.textContent = mode === "register" ? "Creá tu perfil de reclutador" : "Bienvenido de nuevo";
-  description.className = "jc-auth-card__description";
-  description.textContent = mode === "register"
-    ? "El registro se simula con DummyJSON y no crea una cuenta permanente."
-    : "Ingresá al panel administrativo para conectar talento con oportunidades.";
-  tabs.className = "jc-auth-tabs";
-  tabs.setAttribute("aria-label", "Acceso a JobConnect");
+  brandCaption.textContent = "Recruitment workspace";
+  logoFrame.append(logo);
+  brandText.append(name, brandCaption);
+  brand.append(logoFrame, brandText);
+
+  switchNavigation.className = "jc-auth-switch";
+  switchNavigation.setAttribute("aria-label", "Acceso a JobConnect");
   loginLink.href = ROUTES.login;
   loginLink.textContent = "Iniciar sesión";
   loginLink.setAttribute("aria-current", mode === "login" ? "page" : "false");
+  switchTrack.className = "jc-auth-switch__track";
+  switchTrack.setAttribute("aria-hidden", "true");
+  switchThumb.className = "jc-auth-switch__thumb";
+  switchTrack.append(switchThumb);
   registerLink.href = ROUTES.register;
   registerLink.textContent = "Registrarse";
   registerLink.setAttribute("aria-current", mode === "register" ? "page" : "false");
+  switchNavigation.append(loginLink, switchTrack, registerLink);
+
+  cardFrame.className = "jc-auth-card-frame";
+  card.className = `jc-auth-card jc-auth-card--${mode}`;
+  cardFace.className = "jc-auth-card__face";
+  cardHeader.className = "jc-auth-card__header";
+  securityBadge.className = "jc-auth-card__security-badge";
+  securityBadge.textContent = "SECURE ACCESS";
+  title.textContent = mode === "register" ? "Crea tu perfil de reclutador" : "Bienvenido de nuevo";
+  description.className = "jc-auth-card__description";
+  description.textContent = mode === "register"
+    ? "DummyJSON simulará el registro sin crear una cuenta permanente."
+    : "Accede al centro de operaciones de JobConnect.";
+  cardHeader.append(securityBadge, title, description);
+
   form.className = "jc-auth-form";
   form.noValidate = true;
   fields.className = "jc-auth-form__fields";
-  passwordError.className = "jc-field__error";
+  passwordError.className = "jc-field__error jc-auth-password-error";
   passwordError.dataset.authError = "password";
   passwordError.id = "auth-password-error";
   lock.element.setAttribute("aria-describedby", passwordError.id);
   generalError.className = "jc-form-error jc-auth-form__error";
   generalError.setAttribute("role", "alert");
+  generalError.tabIndex = -1;
   securityNote.className = "jc-auth-security";
-  securityNote.textContent = "Tu clave se utiliza solo para esta solicitud y no se guarda en el navegador.";
+  securityNote.textContent = mode === "register"
+    ? "El registro es una simulación y no quedará persistido en el servidor."
+    : "La clave solo se usa durante la solicitud y nunca se guarda.";
   submitButton.className = "jc-btn jc-btn--primary jc-auth-form__submit";
   submitButton.type = "submit";
-  submitButton.textContent = mode === "register" ? "Crear registro simulado" : "Iniciar sesión";
+  submitLabel.textContent = mode === "register" ? "Crear registro simulado" : "Iniciar sesión";
+  submitArrow.className = "jc-auth-form__submit-arrow";
+  submitArrow.setAttribute("aria-hidden", "true");
+  submitArrow.textContent = "->";
+  submitButton.append(submitLabel, submitArrow);
 
   fields.append(usernameField.wrapper);
   if (mode === "register") {
@@ -176,12 +222,23 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   function setBusy(busy) {
     submitButton.disabled = busy;
     submitButton.classList.toggle("is-loading", busy);
-    submitButton.textContent = busy
-      ? "Procesando…"
+    submitLabel.textContent = busy
+      ? "Procesando..."
       : mode === "register" ? "Crear registro simulado" : "Iniciar sesión";
     allFields.forEach(({ input }) => {
       input.disabled = busy;
     });
+  }
+
+  function navigateWithFlip(event, targetRoute, direction) {
+    if (window.location.hash === targetRoute) return;
+    event.preventDefault();
+    window.clearTimeout(navigationTimer);
+    card.classList.add(direction);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    navigationTimer = window.setTimeout(() => {
+      window.location.hash = targetRoute;
+    }, reducedMotion ? 0 : 360);
   }
 
   async function handleSubmit(event) {
@@ -205,7 +262,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
       }
     } catch (error) {
       generalError.textContent = error.message || "No fue posible completar la solicitud.";
-      generalError.focus?.();
+      generalError.focus();
     } finally {
       password = "";
       lock.clear();
@@ -213,6 +270,8 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     }
   }
 
+  loginLink.addEventListener("click", (event) => navigateWithFlip(event, ROUTES.login, "is-flipping-right"));
+  registerLink.addEventListener("click", (event) => navigateWithFlip(event, ROUTES.register, "is-flipping-left"));
   lock.element.addEventListener("lock-change", (event) => {
     password = event.detail.value;
     lock.element.setAttribute("aria-invalid", "false");
@@ -227,11 +286,12 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     });
   });
   form.addEventListener("submit", handleSubmit);
-  brand.append(logo, name);
-  tabs.append(loginLink, registerLink);
   form.append(fields, lock.element, passwordError, securityNote, generalError, submitButton);
-  card.append(brand, title, description, tabs, form);
-  page.append(card);
+  cardFace.append(cardHeader, form);
+  card.append(cardFace);
+  cardFrame.append(card);
+  stage.append(brand, switchNavigation, cardFrame);
+  page.append(ambient, stage);
   return page;
 }
 
