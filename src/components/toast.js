@@ -1,6 +1,16 @@
 let toastRegion = null;
 const activeTimers = new WeakMap();
 
+function createCloseIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  path.setAttribute("d", "m7 7 10 10M17 7 7 17");
+  svg.append(path);
+  return svg;
+}
+
 export function createToastRegion() {
   if (toastRegion?.isConnected) {
     return toastRegion;
@@ -36,7 +46,7 @@ export function showToast(message, { type = "info", duration = 4000 } = {}) {
   closeButton.type = "button";
   closeButton.setAttribute("aria-label", "Cerrar notificación");
   closeButton.title = "Cerrar notificación";
-  closeButton.textContent = "×";
+  closeButton.append(createCloseIcon());
   closeButton.addEventListener("click", () => dismissToast(element));
   element.append(text, closeButton);
   region.append(element);

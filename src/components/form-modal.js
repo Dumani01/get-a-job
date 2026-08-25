@@ -54,6 +54,16 @@ function createSaveIcon() {
   return svg;
 }
 
+function createCloseIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  path.setAttribute("d", "m7 7 10 10M17 7 7 17");
+  svg.append(path);
+  return svg;
+}
+
 export function createFormModal() {
   const dialog = document.createElement("dialog");
   const panel = document.createElement("div");
@@ -85,7 +95,7 @@ export function createFormModal() {
   closeButton.type = "button";
   closeButton.setAttribute("aria-label", "Cerrar formulario");
   closeButton.title = "Cerrar formulario";
-  closeButton.textContent = "x";
+  closeButton.append(createCloseIcon());
   form.noValidate = true;
   fieldsContainer.className = "jc-form-grid";
   generalError.className = "jc-form-error";
