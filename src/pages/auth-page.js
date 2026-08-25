@@ -29,6 +29,16 @@ function createField({ name, label, type = "text", autocomplete, placeholder }) 
   return { wrapper, input, error };
 }
 
+function createArrowIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("aria-hidden", "true");
+  path.setAttribute("d", "M5 12h14m-6-6 6 6-6 6");
+  svg.append(path);
+  return svg;
+}
+
 function validateAuthValues(mode, values, password) {
   const errors = {};
   const setError = (name, ...messages) => {
@@ -185,7 +195,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   submitLabel.textContent = mode === "register" ? "Crear registro simulado" : "Iniciar sesión";
   submitArrow.className = "jc-auth-form__submit-arrow";
   submitArrow.setAttribute("aria-hidden", "true");
-  submitArrow.textContent = "->";
+  submitArrow.append(createArrowIcon());
   submitButton.append(submitLabel, submitArrow);
 
   fields.append(usernameField.wrapper);

@@ -38,13 +38,13 @@ function createBrandButton() {
   button.setAttribute("aria-label", "Expandir o contraer navegación");
   button.title = "Expandir o contraer navegación";
   logoFrame.className = "jc-sidebar__brand-logo";
-  logo.src = "/src/assets/jobconnect-logo.svg";
+  logo.src = "/src/assets/logo-circular.jpeg";
   logo.alt = "";
   logo.width = 36;
   logo.height = 36;
   text.className = "jc-sidebar__brand-text";
   label.textContent = APP_NAME;
-  caption.textContent = "Recruiter OS";
+  caption.textContent = "OVERWORLD / RECRUITER OS";
   chevron.className = "jc-sidebar__brand-chevron";
   chevron.setAttribute("aria-hidden", "true");
   chevron.textContent = "‹";
@@ -62,7 +62,7 @@ function createNavigation(activeRoute) {
   navigation.className = "jc-sidebar__navigation";
   navigation.setAttribute("aria-label", "Navegación principal");
   sectionLabel.className = "jc-sidebar__section-label";
-  sectionLabel.textContent = "Espacio de trabajo";
+  sectionLabel.textContent = "QUEST LOG";
   navigation.append(sectionLabel);
 
   NAVIGATION_ITEMS.forEach((item) => {

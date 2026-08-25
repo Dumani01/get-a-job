@@ -5,22 +5,25 @@
   justify-content: center;
   gap: 0.55rem;
   padding: 0.68rem 1rem;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  border-radius: var(--radius-pixel);
   font: inherit;
   font-size: 0.9rem;
   font-weight: 800;
   line-height: 1;
   cursor: pointer;
+  box-shadow: var(--shadow-pixel-sm);
   transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .jc-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-border-strong);
 }
 
 .jc-btn:active:not(:disabled) {
-  transform: translateY(0);
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--color-border-strong);
 }
 
 .jc-btn:disabled {
@@ -32,12 +35,12 @@
   border-color: var(--color-accent);
   background: var(--color-accent);
   color: var(--color-accent-contrast);
-  box-shadow: 0 8px 20px color-mix(in srgb, var(--color-accent) 14%, transparent);
+  box-shadow: var(--shadow-pixel-md);
 }
 
 .jc-btn--primary:hover:not(:disabled) {
   background: var(--color-accent-hover);
-  box-shadow: 0 10px 28px color-mix(in srgb, var(--color-accent) 20%, transparent);
+  box-shadow: 9px 9px 0 var(--color-border-strong);
 }
 
 .jc-btn--secondary {
@@ -67,6 +70,10 @@
   width: 44px;
   min-width: 44px;
   padding: 0;
+}
+
+.jc-action-button {
+  min-width: 110px;
 }
 
 .jc-action-button__icon {
@@ -106,7 +113,7 @@
   padding-left: 3.75rem;
   overflow: hidden;
   border-width: 2px;
-  border-radius: 999px;
+  border-radius: var(--radius-pixel);
 }
 
 .jc-save-button::before {
@@ -116,7 +123,7 @@
   bottom: 5px;
   left: 5px;
   width: 38px;
-  border-radius: 999px;
+  border-radius: var(--radius-pixel);
   background: var(--color-accent-contrast);
   content: "";
   transition: width 280ms ease;
@@ -162,65 +169,52 @@
 .jc-delete-button.jc-btn {
   position: relative;
   display: inline-flex;
-  width: 50px;
-  min-width: 50px;
+  width: 110px;
+  min-width: 110px;
   height: 50px;
   min-height: 50px;
   padding: 0;
   overflow: hidden;
-  border: 0;
-  border-radius: 50%;
-  background: var(--color-surface-hover);
-  color: var(--color-text);
-  box-shadow: 0 0 20px rgb(0 0 0 / 20%);
-  transition: width 300ms ease, border-radius 300ms ease, background 300ms ease, transform 160ms ease;
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-pixel);
+  background: color-mix(in srgb, var(--color-danger) 11%, var(--color-surface));
+  color: var(--color-danger);
+  box-shadow: var(--shadow-pixel-sm);
+  transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .jc-delete-button__icon {
-  width: 13px;
-  height: 17px;
-  fill: currentColor;
-  transition: width 300ms ease, transform 300ms ease;
+  width: 16px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .jc-delete-button__text {
-  position: absolute;
-  top: -22px;
-  left: 0;
-  width: 100%;
+  position: static;
+  width: auto;
   color: var(--color-text);
-  font-size: 2px;
-  opacity: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  opacity: 1;
   text-align: center;
-  transition: font-size 300ms ease, opacity 300ms ease, transform 300ms ease;
 }
 
 .jc-delete-button:hover:not(:disabled),
 .jc-delete-button:focus-visible {
-  width: 140px;
-  border-radius: 50px;
   background: var(--color-danger);
-}
-
-.jc-delete-button:hover:not(:disabled) .jc-delete-button__icon,
-.jc-delete-button:focus-visible .jc-delete-button__icon {
-  width: 44px;
-  transform: translateY(60%);
-}
-
-.jc-delete-button:hover:not(:disabled) .jc-delete-button__text,
-.jc-delete-button:focus-visible .jc-delete-button__text {
-  font-size: 13px;
-  opacity: 1;
-  transform: translateY(31px);
+  color: var(--color-text);
 }
 
 .jc-card,
 .jc-record-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-card {
@@ -233,7 +227,7 @@
   padding: 0.72rem 0.9rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  background: var(--color-bg);
+  background: var(--color-surface);
   color: var(--color-text);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
 }
@@ -262,6 +256,8 @@
   width: 24px;
   min-height: 24px;
   accent-color: var(--color-accent);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
 }
 
 textarea.jc-input {
@@ -300,7 +296,7 @@ textarea.jc-input {
   margin-left: auto;
   overflow: hidden;
   border: 1px solid var(--color-border-strong);
-  border-radius: 4px;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
   box-shadow: inset 0 0 18px rgb(0 0 0 / 28%);
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
@@ -400,11 +396,25 @@ textarea.jc-input {
   border: 0;
   background: transparent;
   color: var(--color-text-muted);
-  font-size: 0.85rem;
+  font-family: var(--font-pixel);
+  font-size: 1rem;
   font-weight: 900;
   cursor: pointer;
   opacity: 0.45;
   transition: color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.jc-search__clear svg,
+.jc-modal__close svg,
+.jc-toast .jc-btn svg,
+.jc-auth-form__submit-arrow svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
 .jc-search.has-value .jc-search__clear,
@@ -412,7 +422,7 @@ textarea.jc-input {
 .jc-search__clear:focus-visible {
   color: var(--color-accent);
   opacity: 1;
-  transform: rotate(90deg);
+  transform: none;
 }
 
 /* Loader inspired by Smit-Prajapati/spicy-rat-83 */
@@ -434,11 +444,12 @@ textarea.jc-input {
 .jc-loader__card {
   position: relative;
   display: grid;
-  width: 300px;
-  height: 200px;
+  width: min(360px, calc(100vw - 2rem));
+  height: 190px;
   place-content: center;
   overflow: hidden;
-  border-radius: 10px;
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   box-shadow: 0 24px 60px rgb(0 0 0 / 45%);
   transition: border-radius 500ms ease, transform 500ms ease;
@@ -461,10 +472,33 @@ textarea.jc-input {
   gap: 0.55rem;
 }
 
+.jc-loader__head {
+  display: flex;
+  width: 250px;
+  max-width: calc(100vw - 5rem);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-pixel);
+}
+
+.jc-loader__label {
+  color: var(--color-text);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+.jc-loader__region {
+  color: var(--color-accent);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
 .jc-loader__lockup {
   display: flex;
-  width: 52px;
-  height: 52px;
+  width: 260px;
+  height: 75px;
   align-items: center;
   gap: 0.65rem;
   overflow: hidden;
@@ -473,9 +507,13 @@ textarea.jc-input {
 }
 
 .jc-loader__logo {
-  width: 52px;
-  min-width: 52px;
-  height: 52px;
+  width: 260px;
+  min-width: 260px;
+  height: 75px;
+  object-fit: contain;
+  mix-blend-mode: darken;
+  opacity: 0;
+  transform: translateY(10px) scale(0.94);
 }
 
 .jc-loader__wordmark {
@@ -511,9 +549,33 @@ textarea.jc-input {
   transition: letter-spacing 500ms ease 360ms, opacity 500ms ease 360ms;
 }
 
+.jc-loader__segments {
+  display: grid;
+  width: 250px;
+  max-width: calc(100vw - 5rem);
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-top: 1rem;
+}
+
+.jc-loader__segment {
+  height: 13px;
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-bg);
+}
+
+.jc-loader__segment.is-filled {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  animation: jc-loader-segment 420ms steps(1, end) var(--jc-segment-delay) both;
+}
+
 .jc-loader__card.is-active {
   border-radius: 0;
-  transform: scale(1.06);
+}
+
+.jc-loader__card.is-active .jc-loader__logo {
+  animation: jc-loader-logo-in 620ms cubic-bezier(0.2, 0.8, 0.2, 1) 80ms forwards;
 }
 
 .jc-loader__card.is-active .jc-loader__border {
@@ -522,9 +584,7 @@ textarea.jc-input {
   transform: rotate(0);
 }
 
-.jc-loader__card.is-active .jc-loader__lockup {
-  width: 184px;
-}
+.jc-loader__card.is-active .jc-loader__lockup { width: 260px; }
 
 .jc-loader__card.is-active .jc-loader__submark {
   letter-spacing: 0.42em;
@@ -543,9 +603,9 @@ textarea.jc-input {
   gap: 0.7rem;
   padding: 0.9rem;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: linear-gradient(145deg, var(--color-surface-raised), var(--color-bg));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-text) 5%, transparent), inset 0 -12px 24px rgb(0 0 0 / 25%);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface-raised);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-combination-lock[aria-invalid="true"] {
@@ -597,7 +657,7 @@ textarea.jc-input {
   height: 24px;
   place-items: center;
   border: 1px solid var(--color-border-strong);
-  border-radius: 6px;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-hover);
   color: var(--color-text-muted);
   font-size: 0.95rem;
@@ -620,9 +680,9 @@ textarea.jc-input {
   padding: 0;
   overflow: hidden;
   border: 2px solid var(--color-border-strong);
-  border-radius: 9px;
+  border-radius: var(--radius-pixel);
   background: var(--color-bg);
-  box-shadow: inset 9px 0 13px rgb(0 0 0 / 45%), inset -9px 0 13px rgb(0 0 0 / 45%), 0 4px 0 rgb(0 0 0 / 35%);
+  box-shadow: inset 8px 0 12px rgb(0 0 0 / 35%), inset -8px 0 12px rgb(0 0 0 / 35%), var(--shadow-pixel-sm);
   cursor: ns-resize;
 }
 
@@ -639,12 +699,12 @@ textarea.jc-input {
 
 .jc-lock-wheel__viewport::before {
   top: 0;
-  background: linear-gradient(var(--color-bg), transparent);
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
 }
 
 .jc-lock-wheel__viewport::after {
   bottom: 0;
-  background: linear-gradient(transparent, var(--color-bg));
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
 }
 
 .jc-lock-wheel__viewport:hover,
@@ -704,7 +764,7 @@ textarea.jc-input {
   gap: 0.55rem;
   padding-left: 0.7rem;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pixel);
   background: var(--color-bg);
 }
 
@@ -760,18 +820,18 @@ textarea.jc-input {
   padding: 0.75rem;
   overflow: hidden;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   color: var(--color-text);
-  box-shadow: inset 0 0 24px rgb(0 0 0 / 28%);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-social-links::before {
   position: absolute;
   z-index: -2;
   inset: -3px;
-  border-radius: 20px;
-  background: radial-gradient(circle at 16% 8%, var(--color-text), var(--color-accent) 14%, transparent 42%);
+  border: 1px dashed var(--color-border-strong);
+  background: transparent;
   content: "";
   opacity: 0.28;
   transform: translate(-4px, 185px);
@@ -782,8 +842,9 @@ textarea.jc-input {
   position: absolute;
   z-index: -1;
   inset: 2px;
-  border-radius: 19px;
-  background: color-mix(in srgb, var(--color-surface-raised) 80%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface-raised);
   content: "";
 }
 
@@ -828,7 +889,7 @@ textarea.jc-input {
   left: -105px;
   width: 2px;
   height: 2px;
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--color-text);
   box-shadow: 25px 18px var(--color-text), 72px 42px var(--color-text), 118px 18px var(--color-accent), 166px 61px var(--color-text), 205px 22px var(--color-text), 42px 108px var(--color-accent), 136px 126px var(--color-text), 196px 154px var(--color-text);
   content: "";
@@ -883,7 +944,7 @@ textarea.jc-input {
   z-index: -1;
   width: 7px;
   height: 7px;
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--color-text);
   box-shadow: 0 0 10px color-mix(in srgb, var(--color-text) 45%, transparent);
   content: "";
@@ -951,9 +1012,9 @@ textarea.jc-input {
   align-items: center;
   gap: 0.75rem;
   padding: 0.9rem 1rem;
-  border: 1px solid var(--color-info);
-  border-left-width: 4px;
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-info);
+  border-left-width: 8px;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   box-shadow: var(--shadow-md);
 }
@@ -968,15 +1029,16 @@ textarea.jc-input {
   padding: 0;
   overflow: auto;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-pixel-md);
 }
 
 .jc-modal::backdrop {
   background: color-mix(in srgb, var(--color-bg) 82%, transparent);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(2px);
 }
 
 .jc-modal__panel {
@@ -1012,7 +1074,7 @@ textarea.jc-input {
   height: 38px;
   place-items: center;
   border: 1px solid var(--color-border);
-  border-radius: 50%;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   color: var(--color-text-muted);
   cursor: pointer;
@@ -1076,7 +1138,7 @@ textarea.jc-input {
 .jc-state {
   padding: 1rem;
   border: 1px dashed var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pixel);
   color: var(--color-text-muted);
   text-align: center;
 }
@@ -1098,9 +1160,9 @@ textarea.jc-input {
 .jc-table-wrapper {
   overflow: auto;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-pixel-sm);
 }
 
 .jc-table-wrapper table {
@@ -1198,6 +1260,11 @@ textarea.jc-input {
   gap: 0.5rem;
 }
 
+.jc-pagination .jc-btn {
+  min-width: 44px;
+  font-family: var(--font-pixel);
+}
+
 .jc-pagination [aria-current="page"] {
   border-color: var(--color-accent);
   background: var(--color-accent);
@@ -1219,7 +1286,7 @@ textarea.jc-input {
   align-items: center;
   padding: 0.22rem 0.62rem;
   border: 1px solid currentColor;
-  border-radius: 999px;
+  border-radius: var(--radius-pixel);
   font-size: 0.75rem;
   font-weight: 850;
 }
@@ -1243,14 +1310,14 @@ textarea.jc-input {
   gap: 0.55rem;
   padding: 1rem;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface);
 }
 
 .jc-skeleton-table__row {
   height: 52px;
   overflow: hidden;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
 }
 
@@ -1278,21 +1345,19 @@ textarea.jc-input {
   padding: clamp(1.5rem, 4vw, 3rem);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 34%),
-    var(--color-surface);
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-pixel-md);
 }
 
 .jc-dashboard__hero::after {
   position: absolute;
   right: -80px;
   bottom: -120px;
-  width: 280px;
-  height: 280px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 18%, var(--color-border));
-  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  border-radius: var(--radius-pixel);
   content: "";
 }
 
@@ -1308,7 +1373,7 @@ textarea.jc-input {
   width: fit-content;
   padding: 0.32rem 0.55rem;
   border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border));
-  border-radius: 999px;
+  border-radius: var(--radius-pixel);
   color: var(--color-accent);
   font-size: 0.66rem;
   font-weight: 900;
@@ -1342,8 +1407,8 @@ textarea.jc-input {
   gap: 1.1rem;
   padding: 1.15rem;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--color-bg) 84%, transparent);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface-raised);
   box-shadow: inset 0 0 22px rgb(0 0 0 / 22%);
 }
 
@@ -1390,7 +1455,7 @@ textarea.jc-input {
   display: block;
   height: 6px;
   overflow: hidden;
-  border-radius: 999px;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-hover);
 }
 
@@ -1442,13 +1507,13 @@ textarea.jc-input {
   width: 92px;
   height: 92px;
   border: 1px solid var(--color-border);
-  border-radius: 50%;
+  border-radius: var(--radius-pixel);
   content: "";
 }
 
 .jc-card--metric:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-3px);
+  transform: translate(-2px, -2px);
 }
 
 .jc-card--metric.is-emphasized {
@@ -1475,7 +1540,7 @@ textarea.jc-input {
 .jc-metric__icon {
   width: 42px;
   height: 42px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pixel);
 }
 
 .jc-metric__icon svg,
@@ -1534,7 +1599,7 @@ textarea.jc-input {
   width: 130px;
   height: 130px;
   border: 1px solid color-mix(in srgb, var(--color-accent) 11%, var(--color-border));
-  border-radius: 50%;
+  border-radius: var(--radius-pixel);
   content: "";
   transition: transform var(--transition-base);
 }
@@ -1542,7 +1607,7 @@ textarea.jc-input {
 .jc-module-card:hover {
   border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border));
   background: var(--color-surface-raised);
-  transform: translateY(-4px);
+  transform: translate(-2px, -2px);
 }
 
 .jc-module-card:hover::after {
@@ -1561,7 +1626,7 @@ textarea.jc-input {
 .jc-module-card__icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pixel);
 }
 
 .jc-module-card__sequence {
@@ -1645,7 +1710,7 @@ textarea.jc-input {
 .jc-activity-list__marker {
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: var(--radius-pixel);
 }
 
 .jc-activity-list__marker svg {
@@ -1703,7 +1768,7 @@ textarea.jc-input {
   height: 40px;
   place-items: center;
   border: 1px solid color-mix(in srgb, var(--color-accent) 42%, var(--color-border));
-  border-radius: 50%;
+  border-radius: var(--radius-pixel);
   background: var(--color-surface-raised);
   color: var(--color-accent);
   font-size: 0.68rem;
@@ -1723,6 +1788,17 @@ textarea.jc-input {
 @keyframes jc-loading-bar {
   0%, 100% { transform: translateX(-100%); }
   50% { transform: translateX(100%); }
+}
+
+@keyframes jc-loader-segment {
+  from { opacity: 0.25; transform: scaleY(0.65); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes jc-loader-logo-in {
+  0% { opacity: 0; transform: translateY(10px) scale(0.94); }
+  70% { opacity: 1; transform: translateY(-2px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes jc-online-pulse {
