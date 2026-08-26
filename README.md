@@ -34,12 +34,13 @@ Abrir `http://127.0.0.1:4173`. `npm run dev` ejecuta el mismo servidor local.
 
 Nadie debe trabajar directamente en `main`. Las ramas funcionales se crean después de fusionar la fundación.
 
-## Credenciales de integración previstas
+## Acceso con candado y contraseña
 
 - Usuario: `emilys`.
-- Contraseña: `emilyspass`.
+- PIN del candado: `2026`.
+- Contraseña normal: `emilyspass`.
 
-La conexión real y las pantallas funcionales se implementarán en la Parte B. Nunca se guarda la contraseña en el navegador ni en el repositorio.
+Al registrarse se solicita una contraseña normal y un PIN de cuatro dígitos. Las cuentas creadas pueden iniciar sesión con cualquiera de los dos mecanismos desde el mismo navegador. Como DummyJSON no persiste registros, el sistema guarda verificadores locales, no las credenciales en texto plano.
 
 ## Créditos de interfaz
 

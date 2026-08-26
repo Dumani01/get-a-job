@@ -39,7 +39,7 @@ function createArrowIcon() {
   return svg;
 }
 
-function validateAuthValues(mode, values, password) {
+function validateAuthValues(mode, values, { pin, password }) {
   const errors = {};
   const setError = (name, ...messages) => {
     const message = messages.find(Boolean);
@@ -66,7 +66,12 @@ function validateAuthValues(mode, values, password) {
     setError("email", required(values.email, "Correo"), email(values.email, "Correo"));
   }
 
-  setError("password", required(password, "Clave de acceso"));
+  if (mode === "register") {
+    setError("password", required(password, "Contrasena"), reasonableLength(password, { label: "Contrasena", min: 6, max: 128 }));
+    setError("pin", /^\d{4}$/.test(pin) ? "" : "El PIN debe tener 4 digitos.");
+  } else {
+    setError("password", required(pin || password, pin ? "PIN" : "Contrasena"));
+  }
   return errors;
 }
 
@@ -82,7 +87,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   const brandCaption = document.createElement("small");
   const switchNavigation = document.createElement("nav");
   const loginLink = document.createElement("a");
-  const switchTrack = document.createElement("span");
+  const switchTrack = document.createElement("button");
   const switchThumb = document.createElement("span");
   const registerLink = document.createElement("a");
   const cardFrame = document.createElement("div");
@@ -119,6 +124,13 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     autocomplete: "email",
     placeholder: "nombre@correo.com",
   });
+  const normalPasswordField = createField({
+    name: "password",
+    label: "Contrasena normal",
+    type: "password",
+    autocomplete: "new-password",
+    placeholder: "Crea una contrasena de al menos 6 caracteres",
+  });
   const lock = createCombinationLock({ mode: "numeric", allowAlphanumeric: mode === "login" });
   const passwordError = document.createElement("small");
   const generalError = document.createElement("p");
@@ -126,7 +138,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   const submitButton = document.createElement("button");
   const submitLabel = document.createElement("span");
   const submitArrow = document.createElement("span");
-  let password = "";
+  let lockValue = "";
   let navigationTimer = 0;
 
   page.className = "jc-auth-page";
@@ -155,7 +167,8 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   loginLink.textContent = "Iniciar sesión";
   loginLink.setAttribute("aria-current", mode === "login" ? "page" : "false");
   switchTrack.className = "jc-auth-switch__track";
-  switchTrack.setAttribute("aria-hidden", "true");
+  switchTrack.type = "button";
+  switchTrack.setAttribute("aria-label", mode === "login" ? "Cambiar a registro" : "Cambiar a inicio de sesion");
   switchThumb.className = "jc-auth-switch__thumb";
   switchTrack.append(switchThumb);
   registerLink.href = ROUTES.register;
@@ -172,7 +185,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   title.textContent = mode === "register" ? "Crea tu perfil de reclutador" : "Bienvenido de nuevo";
   description.className = "jc-auth-card__description";
   description.textContent = mode === "register"
-    ? "DummyJSON simulará el registro sin crear una cuenta permanente."
+    ? "Crea una contrasena normal y un PIN de 4 digitos. Ambos funcionaran en este navegador."
     : "Accede al centro de operaciones de JobConnect.";
   cardHeader.append(securityBadge, title, description);
 
@@ -188,8 +201,8 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   generalError.tabIndex = -1;
   securityNote.className = "jc-auth-security";
   securityNote.textContent = mode === "register"
-    ? "El registro es una simulación y no quedará persistido en el servidor."
-    : "La clave solo se usa durante la solicitud y nunca se guarda.";
+    ? "Las credenciales se verifican localmente en este navegador y no se guardan como texto plano."
+    : "Usa el PIN del candado o cambia a contrasena normal.";
   submitButton.className = "jc-btn jc-btn--primary jc-auth-form__submit";
   submitButton.type = "submit";
   submitLabel.textContent = mode === "register" ? "Crear registro simulado" : "Iniciar sesión";
@@ -201,11 +214,11 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   fields.append(usernameField.wrapper);
   if (mode === "register") {
     fields.prepend(firstNameField.wrapper, lastNameField.wrapper);
-    fields.append(emailField.wrapper);
+    fields.append(emailField.wrapper, normalPasswordField.wrapper);
   }
 
   const allFields = mode === "register"
-    ? [firstNameField, lastNameField, usernameField, emailField]
+    ? [firstNameField, lastNameField, usernameField, emailField, normalPasswordField]
     : [usernameField];
 
   function clearErrors() {
@@ -224,7 +237,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
       input.setAttribute("aria-invalid", String(Boolean(message)));
       error.textContent = message;
     });
-    const lockMessage = errors.password ?? "";
+    const lockMessage = errors.pin ?? errors.password ?? "";
     lock.element.setAttribute("aria-invalid", String(Boolean(lockMessage)));
     passwordError.textContent = lockMessage;
   }
@@ -255,7 +268,11 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     event.preventDefault();
     clearErrors();
     const values = Object.fromEntries(new FormData(form).entries());
-    const errors = validateAuthValues(mode, values, password);
+    const pin = lock.getMode() === "numeric" ? lockValue : "";
+    const password = mode === "register"
+      ? String(values.password ?? "")
+      : lock.getMode() === "alphanumeric" ? lockValue : "";
+    const errors = validateAuthValues(mode, values, { pin, password });
     showErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -266,15 +283,15 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     try {
       setBusy(true);
       if (mode === "register") {
-        await onRegister?.({ ...values, password });
+        await onRegister?.({ ...values, password, pin });
       } else {
-        await onLogin?.({ username: String(values.username).trim(), password });
+        await onLogin?.({ username: String(values.username).trim(), password, pin });
       }
     } catch (error) {
       generalError.textContent = error.message || "No fue posible completar la solicitud.";
       generalError.focus();
     } finally {
-      password = "";
+      lockValue = "";
       lock.clear();
       setBusy(false);
     }
@@ -282,8 +299,11 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
 
   loginLink.addEventListener("click", (event) => navigateWithFlip(event, ROUTES.login, "is-flipping-right"));
   registerLink.addEventListener("click", (event) => navigateWithFlip(event, ROUTES.register, "is-flipping-left"));
+  switchTrack.addEventListener("click", (event) => {
+    navigateWithFlip(event, mode === "login" ? ROUTES.register : ROUTES.login, mode === "login" ? "is-flipping-left" : "is-flipping-right");
+  });
   lock.element.addEventListener("lock-change", (event) => {
-    password = event.detail.value;
+    lockValue = event.detail.value;
     lock.element.setAttribute("aria-invalid", "false");
     passwordError.textContent = "";
     generalError.textContent = "";

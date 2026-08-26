@@ -1,5 +1,121 @@
-/*
-  Fase 1: archivo reservado para las adaptaciones Uiverse del portal.
-  La fidelidad visual e interactiva se implementará únicamente en las fases
-  indicadas por el contrato, después de revisar cada referencia.
-*/
+/* Only the job card adopts the dashboard record-card template. */
+.jc-portal-job-card {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0 1.15rem 1.15rem;
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  border-top: 0;
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface);
+  box-shadow: 8px 8px 0 var(--color-border);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.jc-portal-job-card::before {
+  display: block;
+  height: 70px;
+  margin: 0 -1.15rem;
+  border-bottom: 2px solid var(--color-border);
+  background: var(--color-accent);
+  content: "";
+}
+
+.jc-portal-job-card::after {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  right: 22px;
+  left: 22px;
+  height: 18px;
+  content: "";
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0, transparent 8px, var(--color-border) 8px, var(--color-text-muted) 10px, var(--color-surface-raised) 11px, var(--color-border) 13px, transparent 13px, transparent 28px),
+    repeating-linear-gradient(90deg, transparent 0, transparent 7px, var(--color-border) 7px, var(--color-border) 14px, transparent 14px, transparent 28px);
+  background-position: 0 0, 0 8px;
+  background-repeat: repeat-x;
+  background-size: 28px 12px, 28px 7px;
+}
+
+.jc-portal-job-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0.4rem 0;
+}
+
+.jc-portal-job-card__details dt {
+  color: var(--color-text-muted);
+  font-family: var(--font-hud, var(--font-pixel));
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.jc-portal-job-card__details dd {
+  min-height: 42px;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.jc-portal-job-card__details dd:first-of-type {
+  font-family: var(--font-pixel);
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
+.jc-portal-job-card__details dd:hover {
+  border-color: var(--color-accent);
+  background: var(--color-surface-hover);
+  box-shadow: 3px 3px 0 var(--color-border);
+  transform: translateX(4px);
+}
+
+.jc-portal-job-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.jc-portal-job-card-actions .jc-portal-btn,
+.jc-portal-job-card-actions .jc-portal-save-job-button {
+  min-height: 42px;
+  padding: 0.6rem 0.85rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pixel);
+  background: var(--color-surface-raised);
+  box-shadow: 4px 4px 0 var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-pixel);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.jc-portal-job-card-actions .jc-portal-btn:hover,
+.jc-portal-job-card-actions .jc-portal-save-job-button:hover,
+.jc-portal-job-card-actions .jc-portal-btn:focus-visible,
+.jc-portal-job-card-actions .jc-portal-save-job-button:focus-visible {
+  background: var(--color-accent);
+  box-shadow: 2px 2px 0 var(--color-border);
+  color: var(--color-accent-contrast);
+  transform: translate(2px, 2px);
+}
+
+@media (max-width: 520px) {
+  .jc-portal-job-card-actions > * { flex: 1 1 100%; }
+}

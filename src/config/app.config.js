@@ -5,6 +5,7 @@ export const STORAGE_KEYS = Object.freeze({
   refreshToken: "jobconnect.refreshToken",
   authUser: "jobconnect.authUser",
   uiState: "jobconnect.uiState",
+  localAccounts: "jobconnect.localAccounts",
 });
 
 export const ROUTES = Object.freeze({
