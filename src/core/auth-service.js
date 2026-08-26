@@ -135,7 +135,16 @@ export async function register(payload) {
 }
 
 export async function validateSession() {
-  if (!getAccessToken()) {
+  const token = getAccessToken();
+  if (!token) {
+    return null;
+  }
+
+  // Cuentas locales/demo no tienen token real en el servidor — skip la validación remota
+  if (token.startsWith("local-")) {
+    const cached = getCurrentUser();
+    if (cached) return cached;
+    clearSession();
     return null;
   }
 
