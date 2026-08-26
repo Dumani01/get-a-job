@@ -19,8 +19,8 @@ body {
   color: var(--color-text);
 }
 
-.jc-colorblind { filter: saturate(0.35) contrast(1.18); }
-.jc-colorblind .jc-portal-btn--primary, .jc-colorblind .jc-portal-nav-link:hover { background: var(--jc-accent-colorblind); color: var(--jc-text-light); }
+[class*="jc-colorblind"] { filter: saturate(0.35) contrast(1.18); }
+[class*="jc-colorblind"] .jc-portal-btn--primary, [class*="jc-colorblind"] .jc-portal-nav-link:hover { background: var(--jc-accent-colorblind); color: var(--jc-text-light); }
 
 a {
   color: inherit;

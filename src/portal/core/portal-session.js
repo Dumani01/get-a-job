@@ -53,6 +53,11 @@ export const portalSession = Object.freeze({
   },
 
   hasRole(role) {
-    return readSession()?.role === role;
+    const session = readSession() ?? getCurrentUser();
+    if (!session) return false;
+    const sessionRole = session.role;
+    const normalizedSession = sessionRole === "candidate" ? "client" : sessionRole;
+    const normalizedTarget = role === "candidate" ? "client" : role;
+    return normalizedSession === normalizedTarget;
   },
 });

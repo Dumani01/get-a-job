@@ -68,27 +68,20 @@ export function createAuthPage({ mode = "login" } = {}) {
     const account = demoAccounts[username.input.value.trim().toLowerCase()];
     const password = lock.querySelector("input")?.value ?? "";
 
-    if (mode === "login" && !account) {
-      try {
-        const user = await login({ username: username.input.value.trim(), pin: password, password });
-        window.location.href = getEntryRoute(user) === "portal" ? "#/inicio" : "/index.html#/dashboard";
-        return;
-      } catch {
-        error.textContent = "Usuario o clave incorrectos.";
-        error.hidden = false;
-        return;
-      }
-    }
-
     if (mode === "login") {
       try {
         const user = await login({ username: username.input.value.trim(), pin: password, password });
         portalSession.set(user);
-        const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
-        window.location.href = redirect ? decodeURIComponent(redirect) : getEntryRoute(user) === "portal" ? "#/inicio" : "/index.html#/dashboard";
+        const isClient = getEntryRoute(user) === "portal";
+        if (isClient) {
+          const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
+          window.location.href = redirect ? decodeURIComponent(redirect) : "#/inicio";
+        } else {
+          window.location.href = "/index.html#/dashboard";
+        }
         return;
       } catch {
-        error.textContent = "Usuario o clave de demostración incorrectos.";
+        error.textContent = account ? "Usuario o clave de demostración incorrectos." : "Usuario o clave incorrectos.";
         error.hidden = false;
         return;
       }
@@ -96,9 +89,16 @@ export function createAuthPage({ mode = "login" } = {}) {
 
     if (mode === "register") {
       try {
-        const user = await register({ username: username.input.value.trim(), password, pin: password, role: roleField?.input.value ?? ROLES.client });
-        portalSession.set({ ...user, role: roleField?.input.value ?? ROLES.client });
-        window.location.hash = "#/inicio";
+        const selectedRole = roleField?.input.value ?? ROLES.client;
+        const user = await register({ username: username.input.value.trim(), password, pin: password, role: selectedRole });
+        const session = portalSession.set({ ...user, role: selectedRole, name: user.name || username.input.value.trim() });
+        window.localStorage.setItem(PORTAL_STORAGE_KEYS.profile, JSON.stringify({ username: session.username, name: session.name || session.username, headline: "Nuevo perfil profesional" }));
+        const isClient = selectedRole === ROLES.client;
+        if (isClient) {
+          window.location.hash = "#/inicio";
+        } else {
+          window.location.href = "/index.html#/dashboard";
+        }
         return;
       } catch {
         error.textContent = "No fue posible crear la cuenta.";
@@ -106,14 +106,6 @@ export function createAuthPage({ mode = "login" } = {}) {
         return;
       }
     }
-
-    const selectedAccount = account ?? { role: ROLES.client, name: username.input.value.trim() };
-    const session = portalSession.set({ id: `${selectedAccount.role}-${username.input.value.trim()}`, username: username.input.value.trim(), name: selectedAccount.name, role: selectedAccount.role });
-    if (mode === "register") {
-      window.localStorage.setItem(PORTAL_STORAGE_KEYS.profile, JSON.stringify({ username: session.username, name: session.name, headline: "Nuevo perfil profesional" }));
-    }
-    const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
-    window.location.hash = redirect ? decodeURIComponent(redirect) : session.role === ROLES.employer ? "#/empresa/ofertas" : "#/perfil";
   });
 
   section.append(heading, message, form, demo);
