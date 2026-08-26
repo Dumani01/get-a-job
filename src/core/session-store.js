@@ -109,7 +109,8 @@ export function subscribe(listener) {
 }
 
 export function clearSession() {
-  Object.values(STORAGE_KEYS).forEach((key) => localStorage.removeItem(key));
+  [STORAGE_KEYS.accessToken, STORAGE_KEYS.refreshToken, STORAGE_KEYS.authUser, STORAGE_KEYS.uiState]
+    .forEach((key) => localStorage.removeItem(key));
   moduleRecords.clear();
   emit("session:clear");
 }

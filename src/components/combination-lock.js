@@ -24,7 +24,7 @@ export function createCombinationLock({ mode = "numeric", allowAlphanumeric = tr
   header.className = "jc-combination-lock__header";
   label.id = "jobconnect-lock-label";
   label.className = "jc-combination-lock__label";
-  label.textContent = "Clave de acceso";
+  label.textContent = "PIN de acceso";
   modeBadge.className = "jc-combination-lock__mode";
   controls.className = "jc-combination-lock__controls";
   hint.className = "jc-combination-lock__hint";
@@ -35,7 +35,7 @@ export function createCombinationLock({ mode = "numeric", allowAlphanumeric = tr
   function emitChange() {
     element.dispatchEvent(new CustomEvent("lock-change", {
       bubbles: true,
-      detail: { value: password },
+      detail: { value: password, mode: activeMode },
     }));
   }
 
@@ -140,8 +140,9 @@ export function createCombinationLock({ mode = "numeric", allowAlphanumeric = tr
     if (activeMode === "numeric") {
       controls.className = "jc-combination-lock__controls";
       digits.forEach((_, index) => controls.append(createWheel(index)));
-      hint.textContent = "Usa los botones, la rueda del mouse o las flechas del teclado.";
-      toggleButton.textContent = "Usar clave alfanumérica de prueba";
+      label.textContent = "PIN de acceso";
+      hint.textContent = "Elige los 4 digitos con los controles del candado.";
+      toggleButton.textContent = "Usar contrasena normal";
       return;
     }
 
@@ -167,8 +168,9 @@ export function createCombinationLock({ mode = "numeric", allowAlphanumeric = tr
     });
     inputWrapper.append(inputIcon, input);
     controls.append(inputWrapper);
-    hint.textContent = "Modo compatible con la credencial real de DummyJSON.";
-    toggleButton.textContent = "Volver al candado numérico";
+    label.textContent = "Contrasena normal";
+    hint.textContent = "Tambien puedes iniciar sesion con tu contrasena normal.";
+    toggleButton.textContent = "Usar PIN con el candado";
   }
 
   function setMode(nextMode) {
@@ -198,7 +200,7 @@ export function createCombinationLock({ mode = "numeric", allowAlphanumeric = tr
   }
   renderControls();
 
-  return Object.freeze({ element, clear, setMode, getValue: () => password });
+  return Object.freeze({ element, clear, setMode, getValue: () => password, getMode: () => activeMode });
 }
 
 export default createCombinationLock;
