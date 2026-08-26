@@ -60,6 +60,12 @@ export function createPortalApp(root) {
     return Object.freeze({ router: null, destroy() { root.replaceChildren(); } });
   }
 
+  // Si ya hay un usuario autenticado pero no hay sesión de portal, sincronizarlos
+  const currentUser = getCurrentUser();
+  if (currentUser && !portalSession.get()) {
+    portalSession.set(currentUser);
+  }
+
   const shell = createPortalShell();
   root.replaceChildren(shell.element);
 
