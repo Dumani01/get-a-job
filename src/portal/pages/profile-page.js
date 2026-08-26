@@ -15,9 +15,13 @@ export function createProfilePage() {
   message.textContent = "Administra tu carta profesional dentro de esta demostración local.";
 
   const stored = JSON.parse(window.localStorage.getItem(PORTAL_STORAGE_KEYS.profile) ?? "null") ?? {};
+  const user = portalSession.get();
+  const userName = stored.name ?? (user ? (user.name || `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim()) : "");
+  const userHeadline = stored.headline ?? (user ? "Nuevo perfil profesional" : "");
+
   const form = document.createElement("form");
   form.className = "jc-portal-auth-form";
-  [["Nombre", "name", stored.name ?? portalSession.get()?.name ?? ""], ["Titular", "headline", stored.headline ?? ""]].forEach(([labelText, name, value]) => {
+  [["Nombre", "name", userName], ["Titular", "headline", userHeadline]].forEach(([labelText, name, value]) => {
     const label = document.createElement("label");
     label.textContent = labelText;
     const input = document.createElement("input");
