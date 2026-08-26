@@ -1,5 +1,6 @@
 import { portalSession } from "../core/portal-session.js";
 import { createPreferenceControls } from "../../core/preferences.js";
+import { PORTAL_EVENTS } from "../config/portal.config.js";
 
 function createLink(label, hash) {
   const link = document.createElement("a");
@@ -44,8 +45,18 @@ export function createPortalHeader() {
     createLink("Postulaciones", "#/postulaciones"),
   );
 
-  const accountLink = createLink(portalSession.get() ? "Mi cuenta" : "Ingresar", portalSession.get() ? "#/perfil" : "#/login");
-  accountLink.classList.add("jc-portal-account-link");
+  const accountLink = document.createElement("a");
+  accountLink.className = "jc-portal-nav-link jc-portal-account-link";
+
+  function updateAccountLink() {
+    const session = portalSession.get();
+    accountLink.textContent = session ? "Mi cuenta" : "Ingresar";
+    accountLink.href = session ? "#/perfil" : "#/login";
+  }
+
+  updateAccountLink();
+  window.addEventListener(PORTAL_EVENTS.sessionChange, updateAccountLink);
+
   const preferenceControls = createPreferenceControls();
 
   inner.append(brand, navigation, preferenceControls, accountLink);
