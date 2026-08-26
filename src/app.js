@@ -5,7 +5,9 @@ import { createFormModal } from "./components/form-modal.js";
 import { showToast } from "./components/toast.js";
 import { ROUTES } from "./config/app.config.js";
 import { MODULES } from "./config/modules.config.js";
-import { hasSession, login, logout, register } from "./core/auth-service.js";
+import { getEntryRoute, getCurrentUser, hasSession, login, logout, register } from "./core/auth-service.js";
+import { canAccess } from "./config/roles.config.js";
+import { applyPreferences } from "./core/preferences.js";
 import { createHashRouter } from "./core/router.js";
 import applicationsModule from "./modules/applications/index.js";
 import candidatesModule from "./modules/candidates/index.js";
@@ -70,7 +72,11 @@ export function createApp(rootElement) {
           showToast(`Sesión iniciada como ${user?.firstName ?? user?.username ?? "reclutador"}.`, {
             type: "success",
           });
-          router.navigate(ROUTES.dashboard, { replace: true });
+          if (getEntryRoute(user) === "portal") {
+            window.location.href = "/portal.html#/inicio";
+          } else {
+            router.navigate(ROUTES.dashboard, { replace: true });
+          }
         } catch (error) {
           const message = getErrorMessage(error, "No fue posible iniciar sesión.");
           showToast(message, { type: "danger" });
@@ -107,6 +113,7 @@ export function createApp(rootElement) {
 
       const failedRequests = results.filter(({ status }) => status === "rejected").length;
       shell.setContent(createDashboardPage({ modules }));
+      applyPreferences();
       if (failedRequests > 0) {
         showToast(`No se pudieron actualizar ${failedRequests} módulos. Se muestran los datos disponibles.`, {
           type: "warning",
@@ -126,6 +133,7 @@ export function createApp(rootElement) {
         const records = await loadModule(module, { force });
         if (!isDisposed()) {
           crudView.setRecords(records);
+          applyPreferences();
         }
       } catch (error) {
         if (!isDisposed()) {
@@ -217,6 +225,14 @@ export function createApp(rootElement) {
   }
 
   function renderPrivate(route) {
+    const currentUser = getCurrentUser();
+    const moduleForRoute = modulesByRoute.get(route);
+    const permission = moduleForRoute?.config.key;
+    if (permission && !canAccess(currentUser?.role, permission)) {
+      showToast("Tu rol no tiene permisos para este módulo.", { type: "warning" });
+      window.queueMicrotask(() => router.navigate(ROUTES.dashboard, { replace: true }));
+      return () => {};
+    }
     let disposed = false;
     let activeCrudView = null;
     const cleanups = [];
@@ -233,6 +249,11 @@ export function createApp(rootElement) {
     });
 
     rootElement.replaceChildren(shell.element);
+
+    if (route === ROUTES.dashboard && getEntryRoute(getCurrentUser()) === "portal") {
+      window.location.href = "/portal.html#/inicio";
+      return () => {};
+    }
 
     if (route === ROUTES.dashboard) {
       renderDashboard(shell, () => disposed);

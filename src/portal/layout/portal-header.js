@@ -1,4 +1,5 @@
 import { portalSession } from "../core/portal-session.js";
+import { createPreferenceControls } from "../../core/preferences.js";
 
 function createLink(label, hash) {
   const link = document.createElement("a");
@@ -45,8 +46,9 @@ export function createPortalHeader() {
 
   const accountLink = createLink(portalSession.get() ? "Mi cuenta" : "Ingresar", portalSession.get() ? "#/perfil" : "#/login");
   accountLink.classList.add("jc-portal-account-link");
+  const preferenceControls = createPreferenceControls();
 
-  inner.append(brand, navigation, accountLink);
+  inner.append(brand, navigation, preferenceControls, accountLink);
   header.append(inner);
 
   return header;

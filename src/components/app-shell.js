@@ -2,6 +2,7 @@ import { APP_NAME, NAVIGATION_ITEMS } from "../config/app.config.js";
 import { getUiState, setUiState } from "../core/session-store.js";
 import { createSearchBar } from "./search-bar.js";
 import { createSocialLinks } from "./social-links.js";
+import { createPreferenceControls } from "../core/preferences.js";
 
 const NAVIGATION_ICONS = Object.freeze({
   "#/dashboard": "M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z",
@@ -244,11 +245,12 @@ export function createAppShell({ activeRoute, onSearch = () => {}, onLogout = ()
   document.addEventListener("keydown", handleEscape);
 
   const themeToggle = createThemeToggleButton();
+  const preferenceControls = createPreferenceControls();
 
   sidebarFooter.append(socialLinks, logoutButton);
   sidebar.append(brandButton, navigation, sidebarFooter);
   topbarHeading.append(breadcrumb, pageTitle);
-  topbar.append(menuButton, topbarHeading, search.element, themeToggle);
+  topbar.append(menuButton, topbarHeading, search.element, preferenceControls, themeToggle);
   workspace.append(topbar, main);
   element.append(sidebar, overlay, workspace);
   search.setExpanded(!sidebar.classList.contains("is-collapsed"));

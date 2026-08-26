@@ -26,6 +26,7 @@ export const PORTAL_EVENTS = Object.freeze({
 });
 
 export const PORTAL_ROLES = Object.freeze({
-  candidate: "candidate",
+  candidate: "client",
+  client: "client",
   employer: "employer",
 });

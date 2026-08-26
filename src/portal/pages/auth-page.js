@@ -1,11 +1,13 @@
-import { PORTAL_ROLES, PORTAL_STORAGE_KEYS } from "../config/portal.config.js";
+import { PORTAL_STORAGE_KEYS } from "../config/portal.config.js";
 import { createCombinationLock } from "../components/combination-lock.js";
 import { portalSession } from "../core/portal-session.js";
+import { getEntryRoute, login, register } from "../../core/auth-service.js";
+import { ROLE_META, ROLES } from "../../config/roles.config.js";
 
 const demoAccounts = Object.freeze({
-  candidato: { password: "Job2026", role: PORTAL_ROLES.candidate, name: "Candidato JobConnect" },
-  emilys: { password: "emilyspass", role: PORTAL_ROLES.candidate, name: "Emily Johnson" },
-  empresa: { password: "Hire2026", role: PORTAL_ROLES.employer, name: "Empresa demostrativa" },
+  candidato: { password: "Job2026", role: ROLES.client, name: "Candidato JobConnect" },
+  emilys: { password: "emilyspass", role: ROLES.client, name: "Emily Johnson" },
+  empresa: { password: "Hire2026", role: ROLES.employer, name: "Empresa demostrativa" },
 });
 
 function createField(labelText, name) {
@@ -40,6 +42,14 @@ export function createAuthPage({ mode = "login" } = {}) {
   form.className = "jc-portal-auth-form";
   const username = createField(mode === "register" ? "Nombre de usuario" : "Usuario", "username");
   const lock = createCombinationLock();
+  const roleField = mode === "register" ? createField("Rol", "role") : null;
+  if (roleField) {
+    roleField.input.type = "select";
+    roleField.input.replaceWith(Object.assign(document.createElement("select"), { className: "jc-portal-auth-input", id: roleField.input.id, name: "role", required: true }));
+    const select = roleField.wrapper.querySelector("select");
+    Object.entries(ROLE_META).forEach(([value, meta]) => { const option = document.createElement("option"); option.value = value; option.textContent = meta.label; select.append(option); });
+    roleField.input = select;
+  }
   const error = document.createElement("p");
   error.className = "jc-portal-auth-error";
   error.setAttribute("role", "alert");
@@ -52,25 +62,58 @@ export function createAuthPage({ mode = "login" } = {}) {
   demo.className = "jc-portal-auth-demo";
   demo.textContent = "Candidato: candidato / Job2026 o emilys / emilyspass · Empresa: empresa / Hire2026";
 
-  form.append(username.wrapper, lock, error, submit);
-  form.addEventListener("submit", (event) => {
+  form.append(username.wrapper, ...(roleField ? [roleField.wrapper] : []), lock, error, submit);
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const account = demoAccounts[username.input.value.trim().toLowerCase()];
     const password = lock.querySelector("input")?.value ?? "";
 
-    if (mode === "login" && (!account || account.password !== password)) {
-      error.textContent = "Usuario o clave de demostración incorrectos.";
-      error.hidden = false;
-      return;
+    if (mode === "login" && !account) {
+      try {
+        const user = await login({ username: username.input.value.trim(), pin: password, password });
+        window.location.href = getEntryRoute(user) === "portal" ? "#/inicio" : "/index.html#/dashboard";
+        return;
+      } catch {
+        error.textContent = "Usuario o clave incorrectos.";
+        error.hidden = false;
+        return;
+      }
     }
 
-    const selectedAccount = account ?? { role: PORTAL_ROLES.candidate, name: username.input.value.trim() };
+    if (mode === "login") {
+      try {
+        const user = await login({ username: username.input.value.trim(), pin: password, password });
+        portalSession.set(user);
+        const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
+        window.location.href = redirect ? decodeURIComponent(redirect) : getEntryRoute(user) === "portal" ? "#/inicio" : "/index.html#/dashboard";
+        return;
+      } catch {
+        error.textContent = "Usuario o clave de demostración incorrectos.";
+        error.hidden = false;
+        return;
+      }
+    }
+
+    if (mode === "register") {
+      try {
+        const user = await register({ username: username.input.value.trim(), password, pin: password, role: roleField?.input.value ?? ROLES.client });
+        portalSession.set({ ...user, role: roleField?.input.value ?? ROLES.client });
+        window.location.hash = "#/inicio";
+        return;
+      } catch {
+        error.textContent = "No fue posible crear la cuenta.";
+        error.hidden = false;
+        return;
+      }
+    }
+
+    const selectedAccount = account ?? { role: ROLES.client, name: username.input.value.trim() };
     const session = portalSession.set({ id: `${selectedAccount.role}-${username.input.value.trim()}`, username: username.input.value.trim(), name: selectedAccount.name, role: selectedAccount.role });
     if (mode === "register") {
       window.localStorage.setItem(PORTAL_STORAGE_KEYS.profile, JSON.stringify({ username: session.username, name: session.name, headline: "Nuevo perfil profesional" }));
     }
     const redirect = new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("redirect");
-    window.location.hash = redirect ? decodeURIComponent(redirect) : session.role === PORTAL_ROLES.employer ? "#/empresa/ofertas" : "#/perfil";
+    window.location.hash = redirect ? decodeURIComponent(redirect) : session.role === ROLES.employer ? "#/empresa/ofertas" : "#/perfil";
   });
 
   section.append(heading, message, form, demo);

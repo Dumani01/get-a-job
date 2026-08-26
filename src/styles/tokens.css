@@ -12,6 +12,7 @@
   --jc-accent-gold: #c9a227;         /* XP, logros, elementos destacados (dorado) */
   --jc-accent-alert: #8b3a2b;        /* alertas, badges urgentes (rojo ladrillo) */
   --jc-accent-alert-dark: #6b241a;   /* hover de alertas */
+  --jc-accent-colorblind: #1f5f80;   /* contraste alternativo */
 
   --jc-text-dark: #3e2f1c;      /* texto principal — NUNCA usar negro puro (#000) */
   --jc-text-light: #f7f1de;     /* texto sobre botones oscuros/verdes */

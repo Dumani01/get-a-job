@@ -8,6 +8,8 @@ export const STORAGE_KEYS = Object.freeze({
   localAccounts: "jobconnect.localAccounts",
 });
 
+export { ROLE_META, ROLES } from "./roles.config.js";
+
 export const ROUTES = Object.freeze({
   login: "#/login",
   register: "#/register",

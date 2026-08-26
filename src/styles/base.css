@@ -6,6 +6,9 @@ body {
   line-height: 1.5;
 }
 
+.jc-colorblind { filter: saturate(0.35) contrast(1.18); }
+.jc-colorblind .jc-btn--primary, .jc-colorblind .jc-sidebar__link[aria-current="page"] { background: var(--jc-accent-colorblind); color: var(--jc-text-light); }
+
 a {
   color: inherit;
   text-decoration: none;

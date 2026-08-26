@@ -67,6 +67,11 @@
   box-shadow: var(--shadow-pixel-sm);
 }
 
+.jc-preference-controls { display: inline-flex; align-items: center; gap: 0.35rem; }
+.jc-preference-controls select, .jc-preference-controls button { min-width: 34px; min-height: 34px; padding: 0.25rem; border: 2px solid var(--color-border); border-radius: var(--radius-pixel); background: var(--color-surface-raised); color: var(--color-text); cursor: pointer; font-family: var(--font-pixel); font-size: 0.7rem; }
+.jc-preference-controls svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; vertical-align: middle; }
+.jc-preference-controls button.is-active { background: var(--color-accent); color: var(--color-accent-contrast); }
+
 .jc-portal-loader-label,
 .jc-portal-empty-state-message,
 .jc-portal-job-card-message,

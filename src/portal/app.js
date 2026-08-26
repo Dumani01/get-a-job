@@ -14,6 +14,8 @@ import { createJobDetailPage } from "./pages/job-detail-page.js";
 import { createJobsPage } from "./pages/jobs-page.js";
 import { createProfilePage } from "./pages/profile-page.js";
 import { createSavedJobsPage } from "./pages/saved-jobs-page.js";
+import { getEntryRoute, getCurrentUser } from "../core/auth-service.js";
+import { applyPreferences } from "../core/preferences.js";
 
 function createPage(routeState) {
   switch (routeState.route.page) {
@@ -53,6 +55,11 @@ export function createPortalApp(root) {
 
   jobsRepository.seed();
 
+  if (getEntryRoute(getCurrentUser()) === "dashboard") {
+    window.location.href = "/index.html#/dashboard";
+    return Object.freeze({ router: null, destroy() { root.replaceChildren(); } });
+  }
+
   const shell = createPortalShell();
   root.replaceChildren(shell.element);
 
@@ -61,6 +68,7 @@ export function createPortalApp(root) {
     session: portalSession,
     onRoute(routeState) {
       shell.main.replaceChildren(createPage(routeState));
+      applyPreferences();
       shell.main.focus({ preventScroll: true });
       shell.statusRegion.textContent = `Sección cargada: ${routeState.route.page}`;
       document.title = `${PORTAL_CONFIG.appName} | Portal de empleos`;

@@ -1,4 +1,5 @@
 import { PORTAL_EVENTS, PORTAL_STORAGE_KEYS } from "../config/portal.config.js";
+import { getCurrentUser } from "../../core/auth-service.js";
 
 function clone(value) {
   if (value === null || value === undefined) {
@@ -35,7 +36,7 @@ function notify(session) {
 
 export const portalSession = Object.freeze({
   get() {
-    return clone(readSession());
+    return clone(readSession() ?? getCurrentUser());
   },
 
   set(session) {

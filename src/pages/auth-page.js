@@ -1,6 +1,7 @@
 import { createCombinationLock } from "../components/combination-lock.js";
 import { APP_NAME, ROUTES } from "../config/app.config.js";
 import { email, reasonableLength, required } from "../core/validators.js";
+import { ROLE_META, ROLES } from "../config/roles.config.js";
 
 function createField({ name, label, type = "text", autocomplete, placeholder }) {
   const wrapper = document.createElement("div");
@@ -27,6 +28,27 @@ function createField({ name, label, type = "text", autocomplete, placeholder }) 
   inputFrame.append(input);
   wrapper.append(labelElement, inputFrame, error);
   return { wrapper, input, error };
+}
+
+function createRoleField() {
+  const wrapper = document.createElement("div");
+  const label = document.createElement("label");
+  const select = document.createElement("select");
+  wrapper.className = "jc-field";
+  label.htmlFor = "auth-role";
+  label.textContent = "Rol *";
+  select.id = "auth-role";
+  select.name = "role";
+  select.className = "jc-input";
+  Object.entries(ROLE_META).forEach(([value, meta]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = meta.label;
+    select.append(option);
+  });
+  select.value = ROLES.client;
+  wrapper.append(label, select);
+  return { wrapper, select };
 }
 
 function createArrowIcon() {
@@ -124,6 +146,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
     autocomplete: "email",
     placeholder: "nombre@correo.com",
   });
+  const roleField = createRoleField();
   const normalPasswordField = createField({
     name: "password",
     label: "Contrasena normal",
@@ -214,7 +237,7 @@ export function createAuthPage({ mode = "login", onLogin, onRegister } = {}) {
   fields.append(usernameField.wrapper);
   if (mode === "register") {
     fields.prepend(firstNameField.wrapper, lastNameField.wrapper);
-    fields.append(emailField.wrapper, normalPasswordField.wrapper);
+    fields.append(emailField.wrapper, roleField.wrapper, normalPasswordField.wrapper);
   }
 
   const allFields = mode === "register"

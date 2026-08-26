@@ -1,7 +1,8 @@
 import { createApp } from "./app.js";
 import { createAppLoader } from "./components/app-loader.js";
 import { showToast } from "./components/toast.js";
-import { hasSession, validateSession } from "./core/auth-service.js";
+import { getEntryRoute, getCurrentUser, hasSession, validateSession } from "./core/auth-service.js";
+import { applyPreferences } from "./core/preferences.js";
 
 const MINIMUM_LOADER_TIME = 1200;
 
@@ -27,6 +28,7 @@ async function start() {
   const loader = createAppLoader();
   const startTime = performance.now();
   loader.show(document.body);
+  applyPreferences();
 
   try {
     if (hasSession()) {
@@ -35,6 +37,16 @@ async function start() {
       } catch {
         showToast("La sesión anterior venció. Inicia sesión nuevamente.", { type: "warning" });
       }
+    }
+
+    if (!hasSession() && !window.location.hash) {
+      window.location.href = "/portal.html#/inicio";
+      return;
+    }
+
+    if (window.location.hash === "#/login" && hasSession() && getEntryRoute(getCurrentUser()) === "portal") {
+      window.location.href = "/portal.html#/inicio";
+      return;
     }
 
     const app = createApp(rootElement);

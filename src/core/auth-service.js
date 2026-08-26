@@ -7,10 +7,16 @@ import {
   setRefreshToken,
 } from "./session-store.js";
 import { STORAGE_KEYS } from "../config/app.config.js";
+import { normalizeRole, ROLES } from "../config/roles.config.js";
 
 const DEMO_PIN = "2026";
 const DEMO_USERNAME = "emilys";
 const DEMO_PASSWORD = "emilyspass";
+const DEMO_ACCOUNTS = Object.freeze({
+  candidato: { password: "Job2026", role: ROLES.client, firstName: "Candidato", lastName: "JobConnect" },
+  emilys: { password: DEMO_PASSWORD, role: ROLES.client, firstName: "Emily", lastName: "Johnson" },
+  empresa: { password: "Hire2026", role: ROLES.employer, firstName: "Empresa", lastName: "demostrativa" },
+});
 
 async function digest(value) {
   const bytes = new TextEncoder().encode(value);
@@ -46,8 +52,8 @@ function toPublicUser(user) {
     return null;
   }
 
-  const { id, username, email, firstName, lastName, image } = user;
-  return { id, username, email, firstName, lastName, image };
+  const { id, username, email, firstName, lastName, image, role } = user;
+  return { id, username, email, firstName, lastName, image, role: normalizeRole(role) };
 }
 
 function assertAuthenticationResponse(response) {
@@ -62,6 +68,10 @@ function assertAuthenticationResponse(response) {
 
 export async function login({ username, password = "", pin = "" }) {
   const normalizedUsername = String(username).trim();
+  const demoAccount = DEMO_ACCOUNTS[normalizedUsername];
+  if (demoAccount && (password === demoAccount.password || pin === demoAccount.password || (normalizedUsername === DEMO_USERNAME && pin === DEMO_PIN))) {
+    return startLocalSession({ id: `demo-${normalizedUsername}`, username: normalizedUsername, role: demoAccount.role, firstName: demoAccount.firstName, lastName: demoAccount.lastName });
+  }
   const localAccount = getLocalAccounts().find((account) => account.username === normalizedUsername);
 
   if (localAccount) {
@@ -108,6 +118,7 @@ export async function register(payload) {
     });
     saveLocalAccount({
       ...toPublicUser({ ...response, ...registration }),
+      role: normalizeRole(registration.role),
       username: String(registration.username).trim(),
       passwordHash: await digest(registration.password),
       pinHash: await digest(pin),
@@ -145,6 +156,18 @@ export function logout() {
 
 export function hasSession() {
   return Boolean(getAccessToken());
+}
+
+export function getCurrentUser() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.authUser) ?? "null");
+  } catch {
+    return null;
+  }
+}
+
+export function getEntryRoute(user = getCurrentUser()) {
+  return !user || user.role === ROLES.client ? "portal" : "dashboard";
 }
 
 export default {
